@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@prisma/client"
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Channel {
+  id        String   @id @default(uuid())
+  name      String
+  type      String // "text" or "voice"
+  serverId  String
+  server    Server   @relation(fields: [serverId], references: [id])
+  createdAt DateTime @default(now())
+
+  messages   Message[] // 👈 add this
+
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String
+  password  String
+  createdAt DateTime @default(now())
+
+  servers      Server[] @relation("ServerMembers")
+  ownedServers Server[] @relation("Server_ownerIdToUser")
+
+  messages   Message[] // 👈 add this
+
+}
+
+model Server {
+  id      String @id @default(uuid())
+  name    String
+  ownerId String
+  owner   User   @relation("Server_ownerIdToUser", fields: [ownerId], references: [id])
+  members User[] @relation("ServerMembers")
+
+  channels Channel[] // ✅ Required for reverse relation
+
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  content   String
+  userId    String
+  channelId String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  channel   Channel  @relation(fields: [channelId], references: [id])
+}
