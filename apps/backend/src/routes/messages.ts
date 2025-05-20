@@ -21,7 +21,16 @@ router.post('/:channelId', authenticateToken, async (req: AuthRequest, res: Resp
                 channelId,
                 userId: req.userId!,
             },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                    },
+                },
+            },
         });
+
 
         res.status(201).json(message);
     } catch (err) {

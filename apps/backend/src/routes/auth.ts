@@ -80,8 +80,15 @@ router.post(
                 expiresIn: '1h',
             });
 
+            // ✅ Set token as a cookie
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: false, // 👉 true in production with HTTPS
+                sameSite: 'lax',
+                maxAge: 3600000, // 1 hour
+            });
+
             res.status(200).json({
-                token,
                 user: {
                     id: user.id,
                     email: user.email,
@@ -94,6 +101,9 @@ router.post(
     }
 );
 
+// =======================
+// GET /auth/me
+// =======================
 router.get(
     '/me',
     authenticateToken,
@@ -125,8 +135,5 @@ router.get(
         }
     }
 );
-
-
-
 
 export default router;

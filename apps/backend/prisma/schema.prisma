@@ -1,8 +1,7 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../../node_modules/@prisma/client"
-}
 
+}
 
 datasource db {
   provider = "postgresql"
@@ -36,16 +35,18 @@ model User {
 }
 
 model Server {
-  id      String @id @default(uuid())
-  name    String
-  ownerId String
-  owner   User   @relation("Server_ownerIdToUser", fields: [ownerId], references: [id])
-  members User[] @relation("ServerMembers")
-
-  channels Channel[] // ✅ Required for reverse relation
-
-  createdAt DateTime @default(now())
+  id              String    @id @default(uuid())
+  name            String
+  ownerId         String
+  owner           User      @relation("Server_ownerIdToUser", fields: [ownerId], references: [id])
+  members         User[]    @relation("ServerMembers")
+  channels        Channel[]
+  inviteCode      String?   @unique
+  inviteExpiresAt DateTime?
+  createdAt       DateTime  @default(now())
 }
+
+
 
 model Message {
   id        String   @id @default(uuid())

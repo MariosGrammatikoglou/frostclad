@@ -12,8 +12,7 @@ export const authenticateToken = (
     res: Response,
     next: NextFunction
 ): void => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader?.split(' ')[1];
+    const token = req.cookies.token;
 
     if (!token) {
         res.status(401).json({ error: 'Token missing' });
@@ -23,8 +22,10 @@ export const authenticateToken = (
     try {
         const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
         (req as AuthRequest).userId = decoded.userId;
-        next(); // ✅ middleware continues
+        next();
     } catch (err) {
         res.status(403).json({ error: 'Invalid or expired token' });
     }
+
+    return;
 };

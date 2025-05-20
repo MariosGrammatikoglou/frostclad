@@ -10,7 +10,9 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!loading && user) {
-      router.push(`/servers/test/channels`);
+      router.push('/servers'); // ✅ Redirect to Server Hub, not /test
+    } else if (!loading && !user) {
+      router.push('/login');
     }
   }, [user, loading]);
 

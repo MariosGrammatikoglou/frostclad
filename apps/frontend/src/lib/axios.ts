@@ -1,8 +1,8 @@
-// apps/frontend/src/lib/axios.ts
+// apps/frontend/lib/axios.ts
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:4000',
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     withCredentials: true,
 });
 

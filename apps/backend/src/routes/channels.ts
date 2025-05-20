@@ -4,13 +4,24 @@ import { authenticateToken, AuthRequest } from '../middleware/authMiddleware';
 
 const router = express.Router();
 
-// Create a new channel in a server
+// ✅ Create a channel in a specific server
 router.post('/:serverId', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
     const { name, type } = req.body;
     const { serverId } = req.params;
 
     if (!name || !type) {
         res.status(400).json({ error: 'Name and type are required' });
+        return;
+    }
+
+    // ✅ Check if the user is the server owner
+    const server = await prisma.server.findUnique({
+        where: { id: serverId },
+        select: { ownerId: true },
+    });
+
+    if (!server || server.ownerId !== req.userId) {
+        res.status(403).json({ error: 'Only the server owner can create channels' });
         return;
     }
 
@@ -30,19 +41,25 @@ router.post('/:serverId', authenticateToken, async (req: AuthRequest, res: Respo
     }
 });
 
-// Get all channels for a server
-router.get('/:serverId', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
+
+// ✅ Get all channels in a server
+router.get('/server/:serverId', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
     const { serverId } = req.params;
 
     try {
         const channels = await prisma.channel.findMany({
             where: { serverId },
+            select: {
+                id: true,
+                name: true,
+                type: true,
+            },
         });
 
         res.status(200).json(channels);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Could not fetch channels' });
+        console.error('Failed to fetch channels:', err);
+        res.status(500).json({ error: 'Failed to fetch channels' });
     }
 });
 
