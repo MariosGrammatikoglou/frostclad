@@ -6,9 +6,12 @@ import { generateInviteCode, getInviteExpiryDate } from '../utils/invite';
 const router = express.Router();
 
 // ✅ Create a new server with a default general channel
-router.post('/', authenticateToken, async (req: AuthRequest, res: Response) => {
+router.post('/', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
     const { name } = req.body;
-    if (!name) return res.status(400).json({ error: 'Name is required' });
+    if (!name) {
+        res.status(400).json({ error: 'Name is required' });
+        return;
+    }
 
     try {
         const inviteCode = generateInviteCode();
@@ -33,6 +36,7 @@ router.post('/', authenticateToken, async (req: AuthRequest, res: Response) => {
                 channels: true,
             },
         });
+
         res.status(201).json(server);
     } catch (err) {
         console.error(err);
@@ -61,12 +65,19 @@ router.get('/', authenticateToken, async (req: AuthRequest, res: Response) => {
     }
 });
 
-// ✅ Get a single server
-router.get('/:id', authenticateToken, async (req: AuthRequest, res: Response) => {
+// ✅ Get a single server (protected: only members)
+router.get('/:id', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
     const serverId = req.params.id;
+
     try {
-        const server = await prisma.server.findUnique({
-            where: { id: serverId },
+        // 🛡️ Check membership
+        const membership = await prisma.server.findFirst({
+            where: {
+                id: serverId,
+                members: {
+                    some: { id: req.userId },
+                },
+            },
             select: {
                 id: true,
                 name: true,
@@ -75,14 +86,32 @@ router.get('/:id', authenticateToken, async (req: AuthRequest, res: Response) =>
                 inviteExpiresAt: true,
             },
         });
-        if (!server) return res.status(404).json({ error: 'Server not found' });
+
+        if (!membership) {
+            res.status(403).json({ error: 'Not a member of this server' });
+            return;
+        }
+
+        let { inviteCode, inviteExpiresAt } = membership;
 
         const now = new Date();
-        const validInvite = server.inviteExpiresAt && server.inviteExpiresAt > now
-            ? server.inviteCode
-            : null;
+        if (!inviteExpiresAt || inviteExpiresAt < now) {
+            inviteCode = generateInviteCode();
+            inviteExpiresAt = getInviteExpiryDate();
 
-        res.json({ ...server, inviteCode: validInvite });
+            await prisma.server.update({
+                where: { id: membership.id },
+                data: { inviteCode, inviteExpiresAt },
+            });
+        }
+
+        res.json({
+            id: membership.id,
+            name: membership.name,
+            ownerId: membership.ownerId,
+            inviteCode,
+            inviteExpiresAt,
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Failed to fetch server' });
@@ -128,8 +157,11 @@ router.delete('/:id/leave', authenticateToken, async (req: AuthRequest, res: Res
 });
 
 // ✅ Join via invite code
-router.post('/join/:inviteCode', authenticateToken, async (req: AuthRequest, res: Response) => {
-    const { inviteCode } = req.params;
+router.post('/join/:inviteCode', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
+    const inviteCode = req.params.inviteCode;
+
+    console.log('Trying to join with code:', inviteCode);
+
     try {
         const server = await prisma.server.findFirst({
             where: {
@@ -140,7 +172,10 @@ router.post('/join/:inviteCode', authenticateToken, async (req: AuthRequest, res
             },
         });
 
-        if (!server) return res.status(404).json({ error: 'Invalid or expired invite code' });
+        if (!server) {
+            res.status(404).json({ error: 'Invalid or expired invite code' });
+            return;
+        }
 
         await prisma.server.update({
             where: { id: server.id },

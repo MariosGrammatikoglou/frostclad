@@ -1,14 +1,22 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import useAuth from '@/hooks/useAuth';
 import MessagePanel from '@/components/MessagePanel';
 import ServerHeader from '@/components/ServerHeader';
 
 export default function ChannelPage() {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const { channelId, serverId } = useParams() as { serverId: string; channelId: string };
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace('/login');
+        }
+    }, [loading, user]);
 
     if (!channelId || !serverId) {
         return <div className="p-4 text-white">Invalid channel</div>;

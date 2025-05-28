@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import api from '@/lib/axios';
 import useAuth from '@/hooks/useAuth';
+import { useEffect } from 'react';
 
 interface Server {
     id: string;
@@ -13,6 +14,13 @@ interface Server {
 export default function ServerHubPage() {
     const router = useRouter();
     const { user, loading } = useAuth();
+
+    // ✅ Redirect to /login if user is not authenticated
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace('/login');
+        }
+    }, [user, loading, router]);
 
     const { data: servers, error, isLoading } = useSWR<Server[]>('/servers', async () => {
         const res = await api.get('/servers', { withCredentials: true });
@@ -35,7 +43,7 @@ export default function ServerHubPage() {
                     Create Server
                 </button>
                 <button
-                    onClick={() => router.push('/servers/join')}
+                    onClick={() => router.push('/join')}
                     className="bg-gray-700 hover:bg-gray-800 px-4 py-2 rounded"
                 >
                     Join Server
@@ -51,7 +59,8 @@ export default function ServerHubPage() {
                         {servers?.map((server) => (
                             <li key={server.id}>
                                 <button
-                                    onClick={() => router.push(`/servers/${server.id}/channels`)}
+                                    onClick={() => router.push(`/servers/${server.id}/channels`)
+                                    }
                                     className="text-left bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded w-full"
                                 >
                                     {server.name}

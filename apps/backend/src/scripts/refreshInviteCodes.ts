@@ -1,6 +1,7 @@
 // apps/backend/scripts/refreshInviteCodes.ts
 import { PrismaClient } from '@prisma/client';
-import { generateInviteCode, getInviteExpiryDate } from '../src/utils/invite';
+import { generateInviteCode, getInviteExpiryDate } from '../utils/invite';
+
 
 const prisma = new PrismaClient();
 

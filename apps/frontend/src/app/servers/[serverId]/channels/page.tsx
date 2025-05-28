@@ -15,12 +15,18 @@ interface Channel {
 }
 
 export default function ServerChannelsPage() {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const { serverId } = useParams() as { serverId: string };
     const router = useRouter();
 
     const [channels, setChannels] = useState<Channel[]>([]);
     const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace('/login');
+        }
+    }, [loading, user]);
 
     const fetchChannels = async () => {
         try {

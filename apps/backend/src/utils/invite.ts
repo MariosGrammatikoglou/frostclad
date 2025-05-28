@@ -2,8 +2,10 @@
 import { nanoid } from 'nanoid';
 
 export function generateInviteCode(): string {
-    return nanoid(10);
+    return nanoid(10); // ✅ Return full mixed-case
+
 }
+
 
 export function getInviteExpiryDate(): Date {
     const now = new Date();
