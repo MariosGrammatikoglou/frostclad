@@ -1,13 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": [
         "^build"
       ],
       "outputs": [
-        "apps/frontend/.next/**",
-        "apps/backend/dist/**"
+        "dist/**",
+        ".next/**"
       ],
       "inputs": [
         "$TURBO_DEFAULT$",

@@ -17,7 +17,7 @@ const httpServer = createServer(app);
 const PORT = process.env.PORT || 4000;
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'localhost:4000/', // or put your Glitch/Electron origin here later
     credentials: true,
 }));
 app.use(express.json());
@@ -35,7 +35,7 @@ app.get('/', (_req, res) => {
 // Remove all Socket.IO/voice chat logic (leave only this for future)
 const io = new Server(httpServer, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: 'localhost:3000',
         credentials: true,
     },
 });
