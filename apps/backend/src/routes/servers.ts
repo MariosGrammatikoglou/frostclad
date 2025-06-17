@@ -23,13 +23,17 @@ router.post('/', authenticateToken, async (req: AuthRequest, res: Response): Pro
                 ownerId: req.userId!,
                 inviteCode,
                 inviteExpiresAt,
-                members: { connect: { id: req.userId } },
-                channels: {
-                    create: {
-                        name: 'general',
-                        type: 'text',
-                    },
+                members: {
+                    connect: { id: req.userId },
                 },
+                channels: {
+                    createMany: {
+                        data: [
+                            { name: 'general', type: 'text' }
+                        ]
+                    }
+                }
+
             },
             include: {
                 members: true,
@@ -43,6 +47,7 @@ router.post('/', authenticateToken, async (req: AuthRequest, res: Response): Pro
         res.status(500).json({ error: 'Server creation failed' });
     }
 });
+
 
 // ✅ Get all servers the user is in
 router.get('/', authenticateToken, async (req: AuthRequest, res: Response) => {

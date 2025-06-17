@@ -21,16 +21,17 @@ export default function CreateServerPage() {
 
     return (
         <div className="p-4 max-w-md mx-auto">
-            <h1 className="text-xl font-bold mb-4">Create a Server</h1>
+            <h1 className="font-bold text-2xl mb-3 tracking-widest uppercase text-[#d4bc8a] drop-shadow-md font-serif">Create a Server</h1>
             <form onSubmit={handleSubmit}>
                 <input
-                    className="w-full p-2 border mb-4 rounded"
+                    className="bg-[#ecd8b2] text-[#2e2518] border-2 border-[#ad8b46] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#bfa36f]"
                     placeholder="Server name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
-                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+                <button type="submit" className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow"
+                >
                     Create
                 </button>
             </form>

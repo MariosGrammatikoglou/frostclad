@@ -33,18 +33,18 @@ export default function ServerHubPage() {
 
     return (
         <div className="p-4 text-white">
-            <h1 className="text-xl font-bold mb-4">Welcome, {user.username}</h1>
+            <h1 className="font-bold text-2xl mb-3 tracking-widest uppercase text-[#d4bc8a] drop-shadow-md font-serif">Welcome, {user.username}</h1>
 
             <div className="mb-6">
                 <button
                     onClick={() => router.push('/servers/create')}
-                    className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mr-4"
+                    className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow"
                 >
                     Create Server
                 </button>
                 <button
                     onClick={() => router.push('/join')}
-                    className="bg-gray-700 hover:bg-gray-800 px-4 py-2 rounded"
+                    className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow"
                 >
                     Join Server
                 </button>
@@ -61,7 +61,7 @@ export default function ServerHubPage() {
                                 <button
                                     onClick={() => router.push(`/servers/${server.id}/channels`)
                                     }
-                                    className="text-left bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded w-full"
+                                    className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow"
                                 >
                                     {server.name}
                                 </button>

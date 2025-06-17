@@ -10,7 +10,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!loading && user) {
-      router.push('/servers'); // ✅ Redirect to Server Hub, not /test
+      router.push('/servers');
     } else if (!loading && !user) {
       router.push('/login');
     }

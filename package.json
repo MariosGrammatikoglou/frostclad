@@ -1,18 +1,27 @@
 {
   "name": "frostclad",
+  "version": "1.0.0",
+  "description": "A downloadable desktop version of Frostclad",
+  "author": "Your Name",
   "private": true,
+  "main": "electron.js",
   "scripts": {
-    "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "build": "turbo run build",
+    "start": "react-scripts start",
+    "electron": "electron .",
+    "electron-pack": "npm run build && electron-builder"
   },
   "devDependencies": {
+    "electron": "^36.4.0",
+    "electron-builder": "^24.14.1",
     "prettier": "^3.5.3",
     "prisma": "^6.7.0",
     "turbo": "^2.5.3",
     "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.8.2"
   },
   "engines": {
     "node": ">=18"
@@ -22,7 +31,22 @@
     "apps/*",
     "packages/*"
   ],
-  "dependencies": {
-    "@prisma/client": "^6.8.2"
+  "build": {
+    "appId": "com.frostclad.app",
+    "productName": "Frostclad",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "electron.js",
+      "apps/frontend/.next/**/*",
+      "apps/frontend/public/**/*"
+    ],
+    "extraResources": [],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    }
   }
 }

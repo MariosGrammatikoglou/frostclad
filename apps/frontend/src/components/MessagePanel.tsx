@@ -1,109 +1,122 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import io from 'socket.io-client';
 import api from '@/lib/axios';
 import useAuth from '@/hooks/useAuth';
-
-const socket = io('http://localhost:4000'); // ✅ Your backend with Socket.IO
 
 type Message = {
     id?: string;
     content: string;
-    timestamp: string;
-    senderId?: string;
+    createdAt?: string;
     user?: {
         username: string;
     };
 };
 
-
-
 export default function MessagePanel({ channelId }: { channelId: string }) {
     const { user } = useAuth();
     const [messages, setMessages] = useState<Message[]>([]);
     const [message, setMessage] = useState('');
-    const bottomRef = useRef<HTMLDivElement | null>(null);
+    const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
+    // Poll for new messages
     useEffect(() => {
-        socket.emit('join-channel', channelId);
+        let mounted = true;
+        let poller: NodeJS.Timeout;
 
-        socket.on('receive-message', (msg: Message) => {
-            setMessages((prev) => [...prev, msg]);
-        });
-
-        return () => {
-            socket.off('receive-message');
-        };
-    }, [channelId]);
-
-    // ✅ 2. Load existing messages from DB on first mount
-    useEffect(() => {
         const loadMessages = async () => {
             try {
                 const res = await api.get(`/messages/${channelId}`);
-                setMessages(res.data);
-                scrollToBottom();
+                if (mounted) setMessages(res.data);
             } catch (err) {
-                console.error('Failed to load messages:', err);
+                if (mounted) console.error('Failed to load messages:', err);
             }
         };
 
-        loadMessages();
+        loadMessages(); // Initial load
+
+        poller = setInterval(loadMessages, 2000); // Poll every 2 seconds
+
+        return () => {
+            mounted = false;
+            clearInterval(poller);
+        };
     }, [channelId]);
 
-    const scrollToBottom = () => {
-        setTimeout(() => {
-            bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-    };
+    // Scroll to bottom on new message
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
 
-
-    // ✅ 3. Save message to backend, then emit to others
     const sendMessage = async () => {
         if (!message.trim()) return;
+
+        // Optimistic update
+        const tempMessage = {
+            id: 'temp-' + Date.now(),
+            content: message,
+            user: { username: user?.username || 'You' },
+            createdAt: new Date().toISOString(),
+        };
+        setMessages((prev) => [...prev, tempMessage]);
+        setMessage('');
 
         try {
             const res = await api.post(`/messages/${channelId}`, {
                 content: message,
             });
-
-            const saved = res.data;
-
-            setMessages((prev) => [...prev, saved]);
-            socket.emit('send-message', { channelId, message: saved });
-
-            setMessage('');
-            scrollToBottom();
+            // Replace temp message with saved one
+            setMessages((prev) =>
+                prev.map((msg) =>
+                    msg.id === tempMessage.id ? res.data : msg
+                )
+            );
         } catch (err) {
+            // Remove temp message if failed
+            setMessages((prev) => prev.filter((msg) => msg.id !== tempMessage.id));
             console.error('Failed to send message:', err);
         }
     };
 
-
     return (
-        <div className="flex flex-col h-full">
-            <div className="flex-1 overflow-y-auto p-4 space-y-2 bg-gray-800 rounded">
-                {messages.map((msg, index) => (
-                    <div key={index} className="text-sm text-white">
-                        <strong>{msg.user?.username ?? msg.senderId ?? 'Unknown'}:</strong>{' '}
-                        {msg.content}
+        <div
+            className="flex flex-col h-full border-4 border-[#bfa36f] rounded-2xl shadow-2xl bg-[#ece2cc]/80 medieval-chat-panel font-serif"
+        >
+            {/* Messages Area */}
+            <div
+                className="flex-1 overflow-y-auto px-6 py-4 space-y-3 medieval-scrollbar"
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
+                {messages.map((msg, idx) => (
+                    <div
+                        key={msg.id ?? idx}
+                        className="rounded px-4 py-2 bg-[#ede1bb]/60 border border-[#d7c28a] shadow font-serif mb-2 last:mb-0"
+                    >
+                        <span className="font-bold text-[#855e2b] tracking-wide">
+                            {msg.user?.username ?? 'Unknown'}
+                        </span>
+                        <span className="mx-2 text-[#b38c4a]">:</span>
+                        <span className="text-[#3a250e]">{msg.content}</span>
                     </div>
                 ))}
-                <div ref={bottomRef}></div>
+                <div ref={messagesEndRef} />
             </div>
 
-            <div className="mt-2 flex">
+            {/* Input Area */}
+            <div className="flex p-4 border-t border-[#bfa36f] bg-[#ede1bb]/70 rounded-b-2xl">
                 <input
-                    className="flex-1 p-2 bg-gray-700 text-white rounded-l"
-                    placeholder="Type a message..."
+                    className="flex-1 p-3 bg-[#fffaf1] text-[#3a250e] rounded-l-xl border-none outline-none placeholder:text-[#bfa36f]"
+                    placeholder="Speak, traveler..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                 />
                 <button
                     onClick={sendMessage}
-                    className="bg-blue-600 px-4 rounded-r text-white"
+                    className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] px-5 py-3 rounded-r-xl font-bold border-l border-[#bfa36f] shadow-md transition"
                 >
                     Send
                 </button>

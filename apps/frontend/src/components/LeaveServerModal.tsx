@@ -11,13 +11,13 @@ export default function LeaveServerModal({ isOpen, onClose, onConfirm }: Props) 
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-            <div className="bg-gray-900 p-6 rounded-xl shadow-lg w-full max-w-sm border border-gray-700">
-                <h2 className="text-xl font-semibold mb-4 text-white">Leave Server?</h2>
-                <p className="text-gray-300 mb-4">Are you sure you want to leave this server?</p>
-                <div className="flex justify-end gap-2">
+            <div className="bg-[#fcf4dd] p-7 rounded-2xl shadow-2xl border-4 border-[#bfa36f] w-full max-w-sm font-serif">
+                <h2 className="text-2xl font-bold mb-3 text-[#7c5b27]">Leave Server?</h2>
+                <p className="text-[#7c5b27] mb-6">Are you sure you want to leave this server?</p>
+                <div className="flex justify-end gap-3">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded"
+                        className="bg-[#bfa36f] hover:bg-[#ad8b46] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow transition"
                     >
                         Cancel
                     </button>
@@ -26,7 +26,7 @@ export default function LeaveServerModal({ isOpen, onClose, onConfirm }: Props) 
                             onConfirm();
                             onClose();
                         }}
-                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded"
+                        className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow transition"
                     >
                         Leave
                     </button>

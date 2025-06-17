@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import useAuth from '@/hooks/useAuth';
 import api from '@/lib/axios';
 import CreateChannelModal from './CreateChannelModal';
+import LeaveServerModal from './LeaveServerModal';
 
 interface ServerHeaderProps {
     onChannelCreated?: () => void;
@@ -51,14 +52,11 @@ export default function ServerHeader({ onChannelCreated }: ServerHeaderProps) {
         try {
             await api.post(
                 `/channels/${serverId}`,
-                {
-                    name,
-                    type: 'text',
-                },
+                { name, type: 'text' },
                 { withCredentials: true }
             );
             onChannelCreated?.();
-            setShowCreateModal(false); // ✅ Close modal on success
+            setShowCreateModal(false);
         } catch (err) {
             console.error('Failed to create channel:', err);
         }
@@ -76,11 +74,11 @@ export default function ServerHeader({ onChannelCreated }: ServerHeaderProps) {
     };
 
     return (
-        <div className="flex justify-between items-center mb-4 text-white">
+        <div className="flex justify-between items-center mb-4 font-serif">
             <div>
-                <h1 className="text-xl font-bold">{server.name}</h1>
-                <p className="text-sm text-gray-400">
-                    Invite Code: {server.inviteCode}
+                <h1 className="font-bold text-2xl mb-2 tracking-widest uppercase text-[#bfa36f] drop-shadow-md">{server.name}</h1>
+                <p className="text-sm text-[#7c5b27]">
+                    Invite Code: <span className="font-mono">{server.inviteCode}</span>
                 </p>
             </div>
             <div className="flex gap-2">
@@ -88,7 +86,7 @@ export default function ServerHeader({ onChannelCreated }: ServerHeaderProps) {
                     <>
                         <button
                             onClick={() => setShowCreateModal(true)}
-                            className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+                            className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow transition"
                         >
                             + Create Channel
                         </button>
@@ -102,29 +100,15 @@ export default function ServerHeader({ onChannelCreated }: ServerHeaderProps) {
                     <>
                         <button
                             onClick={() => setShowLeaveModal(true)}
-                            className="bg-red-600 px-4 py-2 rounded hover:bg-red-700"
+                            className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow transition"
                         >
                             Leave Server
                         </button>
-                        {showLeaveModal && (
-                            <div className="absolute top-20 right-8 bg-gray-800 p-4 rounded shadow-md z-50">
-                                <p className="mb-2">Are you sure you want to leave?</p>
-                                <div className="flex gap-2">
-                                    <button
-                                        onClick={handleLeaveServer}
-                                        className="bg-red-600 px-3 py-1 rounded text-sm hover:bg-red-700"
-                                    >
-                                        Leave
-                                    </button>
-                                    <button
-                                        onClick={() => setShowLeaveModal(false)}
-                                        className="bg-gray-600 px-3 py-1 rounded text-sm hover:bg-gray-500"
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+                        <LeaveServerModal
+                            isOpen={showLeaveModal}
+                            onClose={() => setShowLeaveModal(false)}
+                            onConfirm={handleLeaveServer}
+                        />
                     </>
                 )}
             </div>

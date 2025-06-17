@@ -23,24 +23,27 @@ export default function Sidebar() {
         router.push('/login');
     };
 
-    if (isLoading) return <div className="w-64 bg-gray-800 p-4">Loading...</div>;
+    if (isLoading) return <div className="w-64 bg-[#2e2518] p-4">Loading...</div>;
 
     return (
-        <div className="w-64 bg-gray-800 p-4 flex flex-col h-full">
+        <div className="w-60 h-full p-4 flex flex-col bg-[#2e2518] border-r-4 border-[#bfa36f] shadow-lg font-serif">
             <div>
                 <button
                     onClick={() => router.push('/servers')}
-                    className="block w-full mb-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 text-left"
+                    className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow mb-4"
                 >
                     ← Back to Hub
                 </button>
 
-                <h2 className="text-xl font-bold mb-4">Servers</h2>
+                <h2 className="text-xl font-bold mb-4 text-[#ecd8b2] font-serif">Servers</h2>
 
                 <ul className="space-y-2">
                     {servers?.map((s: Server) => (
                         <li key={s.id}>
-                            <Link href={`/servers/${s.id}/channels`} className="hover:underline">
+                            <Link
+                                href={`/servers/${s.id}/channels`}
+                                className="hover:underline text-[#ecd8b2]"
+                            >
                                 {s.name}
                             </Link>
                         </li>
@@ -52,7 +55,7 @@ export default function Sidebar() {
             <div className="mt-auto pt-6">
                 <button
                     onClick={handleLogout}
-                    className="w-full text-sm bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded"
+                    className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow"
                 >
                     Logout
                 </button>
