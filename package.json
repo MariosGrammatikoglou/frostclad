@@ -1,19 +1,18 @@
 {
   "name": "frostclad",
   "version": "1.0.0",
-  "description": "A downloadable desktop version of Frostclad",
-  "author": "Your Name",
   "private": true,
   "main": "electron.js",
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "electron": "electron .",
+    "electron": "cross-env ELECTRON_START_URL=http://localhost:3000 electron .",
     "electron-pack": "npm run build && electron-builder"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "electron": "^36.4.0",
-    "electron-builder": "^24.14.1",
+    "electron-builder": "^26.0.12",
     "prettier": "^3.5.3",
     "prisma": "^6.7.0",
     "turbo": "^2.5.3",

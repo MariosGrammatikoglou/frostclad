@@ -16,8 +16,9 @@ const app = express();
 const httpServer = createServer(app);
 const PORT = process.env.PORT || 4000;
 
+// Allow requests from your frontend!
 app.use(cors({
-    origin: 'localhost:4000/', // or put your Glitch/Electron origin here later
+    origin: 'http://localhost:3000',
     credentials: true,
 }));
 app.use(express.json());
@@ -32,19 +33,17 @@ app.get('/', (_req, res) => {
     res.send('Frostclad backend with Socket.IO is running!');
 });
 
-// Remove all Socket.IO/voice chat logic (leave only this for future)
+// Socket.IO (ready for future events)
 const io = new Server(httpServer, {
     cors: {
-        origin: 'localhost:3000',
+        origin: 'http://localhost:3000',
         credentials: true,
     },
 });
 
-// (No voice chat, no WebRTC, no socket events here)
+// (No voice chat, no WebRTC, no socket events yet)
 
 httpServer.listen(PORT, () => {
     console.log('✅ Server initialized');
     console.log(`✅ Frostclad backend running at http://localhost:${PORT}`);
 });
-
-

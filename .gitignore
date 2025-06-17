@@ -1,9 +1,24 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Dependency directories
+node_modules/
+apps/*/node_modules/
+packages/*/node_modules/
 
-# Dependencies
-node_modules
-.pnp
-.pnp.js
+# Turbo
+.turbo/
+apps/*/.turbo/
+packages/*/.turbo/
+
+# Build Outputs
+dist/
+apps/*/dist/
+packages/*/dist/
+.next/
+apps/*/.next/
+out/
+apps/*/out/
+build/
+apps/*/build/
+packages/*/build/
 
 # Local env files
 .env
@@ -11,22 +26,19 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
-
-# Testing
-coverage
-
-# Turbo
-.turbo
+apps/*/.env
+apps/*/.env.local
+apps/*/.env.development.local
+apps/*/.env.test.local
+apps/*/.env.production.local
 
 # Vercel
-.vercel
+.vercel/
 
-# Build Outputs
-.next/
-out/
-build
-dist
-
+# Testing
+coverage/
+apps/*/coverage/
+packages/*/coverage/
 
 # Debug
 npm-debug.log*
