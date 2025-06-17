@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-
+// comment for trigger
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 
 export interface AuthRequest extends Request {
