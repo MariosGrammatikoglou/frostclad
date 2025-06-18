@@ -38,10 +38,9 @@
     },
     "files": [
       "electron.js",
-      "apps/frontend/.next/**/*",
-      "apps/frontend/public/**/*",
+      "apps/frontend/out/**",
       "apps/frontend/package.json",
-      "apps/frontend/node_modules/**/*"
+      "apps/frontend/node_modules/**"
     ],
     "extraResources": [],
     "win": {

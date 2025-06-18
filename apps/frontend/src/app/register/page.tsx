@@ -34,6 +34,15 @@ export default function RegisterPage() {
                 {error && <p className="text-red-500 text-sm">{error}</p>}
                 <button type="submit" className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow">Register</button>
             </form>
+            <div className="text-center mt-4">
+                <span className="text-[#6c5127]">Already have an account?</span>
+                <button
+                    onClick={() => router.push('/login')}
+                    className="ml-2 underline text-[#ad8b46] hover:text-[#bfa36f] font-bold"
+                >
+                    Login
+                </button>
+            </div>
         </div>
     );
 }

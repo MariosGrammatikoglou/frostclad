@@ -1,5 +1,4 @@
 const { app, BrowserWindow } = require('electron');
-const path = require('path');
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -11,9 +10,13 @@ function createWindow() {
         }
     });
 
-    // In development, load from localhost; in production, from built files
-    const startUrl = process.env.ELECTRON_START_URL || `http://localhost:3000`;
-    win.loadURL(startUrl);
+    // In dev, load local Next.js server. In prod, load Vercel frontend.
+    const isDev = !app.isPackaged;
+    if (isDev) {
+        win.loadURL('http://localhost:3000');
+    } else {
+        win.loadURL('https://frostclad-frontend.vercel.app');
+    }
 }
 
 app.whenReady().then(createWindow);
