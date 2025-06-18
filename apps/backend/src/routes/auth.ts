@@ -83,10 +83,11 @@ router.post(
             // ✅ Set token as a cookie
             res.cookie('token', token, {
                 httpOnly: true,
-                secure: false, // 👉 true in production with HTTPS
-                sameSite: 'lax',
-                maxAge: 3600000, // 1 hour
+                secure: true,          // REQUIRED for cross-site cookies in production (HTTPS)
+                sameSite: 'none',      // REQUIRED for cross-site cookies!
+                maxAge: 3600000,
             });
+
 
             res.status(200).json({
                 user: {

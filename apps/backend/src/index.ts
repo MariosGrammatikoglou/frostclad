@@ -25,10 +25,19 @@ const allowedOrigins = [LOCAL_URL, FRONTEND_URL];
 
 app.use(
     cors({
-        origin: allowedOrigins,
+        origin: function (origin, callback) {
+            // allow requests with no origin (like mobile apps, curl requests)
+            if (!origin) return callback(null, true);
+            if (allowedOrigins.indexOf(origin) !== -1) {
+                return callback(null, true);
+            } else {
+                return callback(new Error('Not allowed by CORS'), false);
+            }
+        },
         credentials: true,
     })
 );
+
 
 app.use(express.json());
 app.use(cookieParser());
