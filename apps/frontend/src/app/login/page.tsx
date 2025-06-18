@@ -19,7 +19,7 @@ export default function LoginPage() {
         setError('');
         try {
             const res = await api.post('/auth/login', form);
-            Cookies.set('token', res.data.token); // store JWT
+
             router.push('/'); // redirect to home
         } catch (err: any) {
             setError(err.response?.data?.error || 'Login failed');
