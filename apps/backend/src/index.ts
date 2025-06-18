@@ -39,17 +39,16 @@ app.use('/servers', serverRoutes);
 app.use('/channels', channelRoutes);
 app.use('/messages', messageRoutes);
 
-// ⬅️ Redirect root to frontend /login
+// 🔁 Permanent redirect from backend root to frontend /login
 app.get('/', (_req, res) => {
-    res.redirect(`${FRONTEND_URL}/login`);
+    res.redirect(301, `${FRONTEND_URL}/login`);
 });
 
-// Optional: Handle undefined routes by returning 404
+// Optional: Handle all unknown backend routes with a 404 JSON response
 app.use((_req, res) => {
     res.status(404).json({ message: 'Endpoint not found' });
 });
 
-// Initialize Socket.IO
 const io = new Server(httpServer, {
     cors: {
         origin: allowedOrigins,
