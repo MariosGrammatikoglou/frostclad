@@ -16,28 +16,20 @@ const app = express();
 const httpServer = createServer(app);
 const PORT = process.env.PORT || 4000;
 
-// Update this with your actual deployed frontend URL!
 const FRONTEND_URL = process.env.FRONTEND_URL || 'https://frostclad-frontend.vercel.app';
 const LOCAL_URL = 'http://localhost:3000';
-
-// Allow requests from your frontend (local + prod)
 const allowedOrigins = [LOCAL_URL, FRONTEND_URL];
 
 app.use(
     cors({
-        origin: function (origin, callback) {
-            // allow requests with no origin (like mobile apps, curl requests)
+        origin: (origin, callback) => {
             if (!origin) return callback(null, true);
-            if (allowedOrigins.indexOf(origin) !== -1) {
-                return callback(null, true);
-            } else {
-                return callback(new Error('Not allowed by CORS'), false);
-            }
+            if (allowedOrigins.includes(origin)) return callback(null, true);
+            return callback(new Error('Not allowed by CORS'), false);
         },
         credentials: true,
     })
 );
-
 
 app.use(express.json());
 app.use(cookieParser());
@@ -47,11 +39,17 @@ app.use('/servers', serverRoutes);
 app.use('/channels', channelRoutes);
 app.use('/messages', messageRoutes);
 
+// ⬅️ Redirect root to frontend /login
 app.get('/', (_req, res) => {
-    res.send('Frostclad backend with Socket.IO is running!');
+    res.redirect(`${FRONTEND_URL}/login`);
 });
 
-// Socket.IO CORS: Should match the above
+// Optional: Handle undefined routes by returning 404
+app.use((_req, res) => {
+    res.status(404).json({ message: 'Endpoint not found' });
+});
+
+// Initialize Socket.IO
 const io = new Server(httpServer, {
     cors: {
         origin: allowedOrigins,
@@ -59,9 +57,6 @@ const io = new Server(httpServer, {
     },
 });
 
-// (No voice chat, no WebRTC, no socket events yet)
-
 httpServer.listen(PORT, () => {
-    console.log('✅ Server initialized');
-    console.log(`✅ Frostclad backend running at http://localhost:${PORT}`);
+    console.log('✅ Frostclad backend running at http://localhost:' + PORT);
 });
