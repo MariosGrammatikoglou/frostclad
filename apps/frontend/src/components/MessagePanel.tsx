@@ -8,14 +8,15 @@ type Message = {
     id?: string;
     content: string;
     createdAt?: string;
-    user?: { username: string; };
+    user?: {
+        username: string;
+    };
 };
 
 export default function MessagePanel({ channelId }: { channelId: string }) {
     const { user } = useAuth();
     const [messages, setMessages] = useState<Message[]>([]);
     const [message, setMessage] = useState('');
-    const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const messagesContainerRef = useRef<HTMLDivElement | null>(null);
 
     // Fetch messages
@@ -34,22 +35,32 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
 
         loadMessages();
         poller = setInterval(loadMessages, 2000);
-        return () => { mounted = false; clearInterval(poller); };
+
+        return () => {
+            mounted = false;
+            clearInterval(poller);
+        };
     }, [channelId]);
 
-    // Only auto-scroll if user is at bottom
+    // Auto-scroll if at bottom
     useEffect(() => {
         const container = messagesContainerRef.current;
         if (!container) return;
-        const threshold = 100;
+
+        // Only scroll if user is near the bottom (classic chat UX)
+        const threshold = 40;
         const atBottom = container.scrollHeight - container.scrollTop - container.clientHeight < threshold;
+
         if (atBottom) {
-            messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+            container.scrollTop = container.scrollHeight;
         }
+        // If not at bottom, do not auto-scroll!
     }, [messages]);
 
     const sendMessage = async () => {
         if (!message.trim()) return;
+
+        // Optimistic update
         const tempMessage = {
             id: 'temp-' + Date.now(),
             content: message,
@@ -58,16 +69,37 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
         };
         setMessages((prev) => [...prev, tempMessage]);
         setMessage('');
+
         try {
             const res = await api.post(`/messages/${channelId}`, { content: message });
-            setMessages((prev) => prev.map((msg) => msg.id === tempMessage.id ? res.data : msg));
-        } catch {
+            setMessages((prev) =>
+                prev.map((msg) => (msg.id === tempMessage.id ? res.data : msg))
+            );
+        } catch (err) {
             setMessages((prev) => prev.filter((msg) => msg.id !== tempMessage.id));
+            console.error('Failed to send message:', err);
         }
+
+        // Force scroll to bottom
+        setTimeout(() => {
+            const container = messagesContainerRef.current;
+            if (container) container.scrollTop = container.scrollHeight;
+        }, 50);
     };
 
     return (
-        <div className="window" style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', margin: 8 }}>
+        <div
+            className="window"
+            style={{
+                height: 480, // fixed, classic IM size
+                minWidth: 330,
+                display: 'flex',
+                flexDirection: 'column',
+                margin: 0,
+                padding: 0,
+                background: '#efefef'
+            }}
+        >
             <div className="title-bar">
                 <div className="title-bar-text">Channel Chat</div>
             </div>
@@ -76,44 +108,56 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
                 className="window-body"
                 style={{
                     flex: 1,
-                    minHeight: 0,
                     overflowY: 'auto',
-                    background: '#fff',
-                    padding: 12,
+                    background: '#efefef',
+                    padding: 8,
+                    border: 'none',
+                    marginBottom: 0
                 }}
             >
                 {messages.map((msg, idx) => (
                     <div
                         key={msg.id ?? idx}
+                        className="field-row"
                         style={{
+                            background: '#fff',
+                            border: '1px solid #bbb',
                             marginBottom: 6,
-                            padding: "7px 12px",
-                            background: "#eee",
-                            border: "1px solid #bbb",
-                            fontSize: 15,
+                            borderRadius: 2,
+                            padding: '4px 8px',
+                            fontSize: 14,
+                            display: 'flex',
+                            alignItems: 'center',
+                            minHeight: 26,
+                            maxWidth: 320,
+                            wordBreak: 'break-word',
+                            boxShadow: '0 1px 0 #eee'
                         }}
                     >
-                        <b>{msg.user?.username ?? 'Unknown'}:</b> {msg.content}
+                        <span style={{ fontWeight: 'bold', color: '#00509E', marginRight: 4 }}>
+                            {msg.user?.username ?? 'Unknown'}:
+                        </span>
+                        <span>{msg.content}</span>
                     </div>
                 ))}
-                <div ref={messagesEndRef} />
             </div>
             <form
-                className="window-body"
-                style={{ display: "flex", borderTop: "1px solid #ccc", gap: 8, background: "#eee", margin: 0 }}
-                onSubmit={e => { e.preventDefault(); sendMessage(); }}
+                onSubmit={e => {
+                    e.preventDefault();
+                    sendMessage();
+                }}
+                style={{ display: 'flex', borderTop: '1px solid #b0b0b0', padding: 6, background: '#ddd' }}
             >
                 <input
+                    type="text"
                     className="input"
-                    style={{ flex: 1 }}
+                    placeholder="Type your message…"
                     value={message}
-                    placeholder="Type a message..."
+                    style={{ flex: 1, marginRight: 8, minHeight: 28, fontSize: 14 }}
                     onChange={e => setMessage(e.target.value)}
-                    onKeyDown={e => { if (e.key === "Enter") sendMessage(); }}
+                    onKeyDown={e => e.key === 'Enter' && sendMessage()}
                 />
-                <button type="submit" className="button" style={{ minWidth: 80 }}>
-                    Send
-                </button>
+                <button type="submit" className="button">Send</button>
             </form>
         </div>
     );

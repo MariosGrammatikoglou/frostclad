@@ -15,41 +15,35 @@ export default function JoinPage() {
 
         try {
             await api.post(`/servers/join/${inviteCode}`);
-            router.push('/servers');
+            router.push('/servers'); // Go to hub after joining
         } catch (err: any) {
+            console.error(err);
             setError('Invalid or expired invite code');
         }
     };
 
+    const handleCancel = () => {
+        router.push('/servers');
+    };
+
     return (
-        <div className="window" style={{ width: 350, margin: "4rem auto", minHeight: 340 }}>
-            <div className="title-bar">
-                <div className="title-bar-text">Join a Server</div>
-            </div>
+        <div className="window" style={{ maxWidth: 400, margin: "64px auto", padding: 24 }}>
+            <div className="title-bar"><div className="title-bar-text">Join a Server</div></div>
             <div className="window-body">
                 <form onSubmit={handleJoin}>
-                    <div className="field-row-stacked" style={{ marginBottom: 12 }}>
-                        <label htmlFor="inviteCode">Invite Code</label>
-                        <input
-                            id="inviteCode"
-                            type="text"
-                            value={inviteCode}
-                            onChange={(e) => setInviteCode(e.target.value)}
-                            className="input"
-                            autoComplete="off"
-                            required
-                        />
-                    </div>
-                    {error && <div className="status-bar status-bar--error" style={{ marginBottom: 8 }}>
-                        <p>{error}</p>
-                    </div>}
-                    <div className="field-row" style={{ justifyContent: "space-between" }}>
-                        <button type="submit" className="button">Join</button>
-                        <button
-                            type="button"
-                            className="button"
-                            onClick={() => router.push('/servers')}
-                        >← Back to Hub</button>
+                    <input
+                        type="text"
+                        placeholder="Enter Invite Code"
+                        value={inviteCode}
+                        onChange={(e) => setInviteCode(e.target.value)}
+                        className="input"
+                        required
+                        style={{ width: "100%", marginBottom: 16 }}
+                    />
+                    {error && <p style={{ color: "#c00", marginBottom: 12 }}>{error}</p>}
+                    <div style={{ display: 'flex', gap: 8 }}>
+                        <button type="submit" className="button" style={{ minWidth: 90 }}>Join</button>
+                        <button type="button" className="button" style={{ minWidth: 90 }} onClick={handleCancel}>Cancel</button>
                     </div>
                 </form>
             </div>

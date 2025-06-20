@@ -10,35 +10,37 @@ export default function CreateServerPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         try {
             const res = await api.post('/servers', { name }, { withCredentials: true });
             router.push(`/servers/${res.data.id}/channels`);
         } catch (err) {
-            alert('Server creation failed!');
+            console.error('Server creation failed:', err);
         }
     };
 
+    const handleCancel = () => {
+        router.push('/servers');
+    };
+
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
-            <div className="window" style={{ minWidth: 320, maxWidth: 400 }}>
-                <div className="title-bar">
-                    <div className="title-bar-text">Create a Server</div>
-                </div>
-                <div className="window-body">
-                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                        <label htmlFor="serverName">Server name:</label>
-                        <input
-                            id="serverName"
-                            className="input"
-                            placeholder="My server"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                            style={{ marginBottom: 16 }}
-                        />
-                        <button type="submit" className="button">Create</button>
-                    </form>
-                </div>
+        <div className="window" style={{ maxWidth: 400, margin: "64px auto", padding: 24 }}>
+            <div className="title-bar"><div className="title-bar-text">Create a Server</div></div>
+            <div className="window-body">
+                <form onSubmit={handleSubmit}>
+                    <input
+                        className="input"
+                        placeholder="Server name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        style={{ width: "100%", marginBottom: 16 }}
+                    />
+                    <div style={{ display: 'flex', gap: 8 }}>
+                        <button type="submit" className="button" style={{ minWidth: 90 }}>Create</button>
+                        <button type="button" className="button" style={{ minWidth: 90 }} onClick={handleCancel}>Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
     );
