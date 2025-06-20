@@ -28,39 +28,50 @@ export default function ChannelSidebar() {
     };
 
     return (
-        <aside
-            className="
-        w-full h-full p-6
-        bg-[#f6e8c7]
-        font-serif
-        flex flex-col
-        relative
-        overflow-y-auto
-      "
-            style={{
-                fontFamily: "'IM Fell English SC', serif",
-            }}
-        >
-            <div>
-                <h2 className="text-2xl mb-8 font-bold text-[#7c5b27] tracking-wider flex items-center gap-2">
-                    <span>🗡️</span> <span>Text Channels</span>
-                </h2>
-                {textChannels.map(channel => (
-                    <button
-                        key={channel.id}
-                        onClick={() => handleTextClick(channel.id)}
-                        className={`w-full text-left py-3 px-6 mb-3 rounded-lg border-2 border-[#bfa36f] shadow font-bold font-serif text-lg transition-all duration-150 
-              ${channel.id === channelId
-                                ? 'bg-[#ad8b46] text-[#2d1d09] ring-2 ring-[#d4bc8a] shadow-lg'
-                                : 'bg-[#fcf4dd] text-[#855e2b] hover:bg-[#e0c48b] hover:scale-[1.03]'
-                            }`}
-                        style={{
-                            letterSpacing: '0.04em'
-                        }}
-                    >
-                        # {channel.name}
-                    </button>
-                ))}
+        <aside style={{ height: '100%', width: '100%', padding: 0, background: '#ece9d8' }}>
+            <div className="window" style={{ height: '100%', minHeight: 0, margin: 0, borderRadius: 0 }}>
+                <div className="title-bar">
+                    <div className="title-bar-text">Channels</div>
+                </div>
+                <div className="window-body" style={{ overflowY: 'auto', height: 'calc(100% - 28px)', padding: 8 }}>
+                    <div>
+                        <div style={{
+                            fontWeight: 'bold',
+                            fontSize: 16,
+                            marginBottom: 16,
+                            color: '#222',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 6,
+                        }}>
+                            <span role="img" aria-label="sword">🗡️</span>
+                            <span>Text Channels</span>
+                        </div>
+                        {textChannels.map(channel => (
+                            <button
+                                key={channel.id}
+                                onClick={() => handleTextClick(channel.id)}
+                                className={`button ${channel.id === channelId ? 'active' : ''}`}
+                                style={{
+                                    display: 'block',
+                                    width: '100%',
+                                    textAlign: 'left',
+                                    marginBottom: 10,
+                                    background: channel.id === channelId ? '#c0c0c0' : '#fff',
+                                    border: channel.id === channelId ? '2px inset #000' : '2px outset #fff',
+                                    fontWeight: channel.id === channelId ? 'bold' : 'normal',
+                                    color: '#222',
+                                    padding: '6px 10px',
+                                    fontFamily: 'inherit',
+                                    fontSize: 15,
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                # {channel.name}
+                            </button>
+                        ))}
+                    </div>
+                </div>
             </div>
         </aside>
     );

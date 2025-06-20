@@ -28,23 +28,12 @@ export default function ServerHeader({ onChannelCreated }: ServerHeaderProps) {
 
     useEffect(() => {
         if (!serverId) return;
-
-        const fetchServer = async () => {
-            try {
-                const res = await api.get(`/servers/${serverId}`, {
-                    withCredentials: true,
-                });
-                setServer(res.data);
-            } catch (err) {
-                console.error('Failed to fetch server:', err);
-            }
-        };
-
-        fetchServer();
+        api.get(`/servers/${serverId}`, { withCredentials: true })
+            .then(res => setServer(res.data))
+            .catch(err => console.error('Failed to fetch server:', err));
     }, [serverId]);
 
     if (!server || !user) return null;
-
     const isOwner = user.id === server.ownerId;
 
     const handleCreateChannel = async (name: string) => {
@@ -74,43 +63,37 @@ export default function ServerHeader({ onChannelCreated }: ServerHeaderProps) {
     };
 
     return (
-        <div className="flex justify-between items-center mb-4 font-serif">
-            <div>
-                <h1 className="font-bold text-2xl mb-2 tracking-widest uppercase text-[#bfa36f] drop-shadow-md">{server.name}</h1>
-                <p className="text-sm text-[#7c5b27]">
-                    Invite Code: <span className="font-mono">{server.inviteCode}</span>
-                </p>
-            </div>
-            <div className="flex gap-2">
-                {isOwner ? (
-                    <>
-                        <button
-                            onClick={() => setShowCreateModal(true)}
-                            className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow transition"
-                        >
-                            + Create Channel
-                        </button>
-                        <CreateChannelModal
-                            isOpen={showCreateModal}
-                            onClose={() => setShowCreateModal(false)}
-                            onSubmit={handleCreateChannel}
-                        />
-                    </>
-                ) : (
-                    <>
-                        <button
-                            onClick={() => setShowLeaveModal(true)}
-                            className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow transition"
-                        >
-                            Leave Server
-                        </button>
-                        <LeaveServerModal
-                            isOpen={showLeaveModal}
-                            onClose={() => setShowLeaveModal(false)}
-                            onConfirm={handleLeaveServer}
-                        />
-                    </>
-                )}
+        <div style={{ marginBottom: 10 }}>
+            <div className="window" style={{ width: "100%" }}>
+                <div className="title-bar">
+                    <div className="title-bar-text">{server.name}</div>
+                </div>
+                <div className="window-body" style={{ fontSize: 14 }}>
+                    <div style={{ marginBottom: 8 }}>
+                        <b>Invite Code:</b> <span style={{ fontFamily: "monospace" }}>{server.inviteCode}</span>
+                    </div>
+                    <div style={{ display: "flex", gap: 8 }}>
+                        {isOwner ? (
+                            <>
+                                <button className="button" onClick={() => setShowCreateModal(true)}>+ Create Channel</button>
+                                <CreateChannelModal
+                                    isOpen={showCreateModal}
+                                    onClose={() => setShowCreateModal(false)}
+                                    onSubmit={handleCreateChannel}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <button className="button" onClick={() => setShowLeaveModal(true)}>Leave Server</button>
+                                <LeaveServerModal
+                                    isOpen={showLeaveModal}
+                                    onClose={() => setShowLeaveModal(false)}
+                                    onConfirm={handleLeaveServer}
+                                />
+                            </>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );

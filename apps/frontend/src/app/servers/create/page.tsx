@@ -10,31 +10,36 @@ export default function CreateServerPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         try {
             const res = await api.post('/servers', { name }, { withCredentials: true });
             router.push(`/servers/${res.data.id}/channels`);
         } catch (err) {
-            console.error('Server creation failed:', err);
+            alert('Server creation failed!');
         }
     };
 
     return (
-        <div className="p-4 max-w-md mx-auto">
-            <h1 className="font-bold text-2xl mb-3 tracking-widest uppercase text-[#d4bc8a] drop-shadow-md font-serif">Create a Server</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    className="bg-[#ecd8b2] text-[#2e2518] border-2 border-[#ad8b46] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#bfa36f]"
-                    placeholder="Server name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-                <button type="submit" className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow"
-                >
-                    Create
-                </button>
-            </form>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
+            <div className="window" style={{ minWidth: 320, maxWidth: 400 }}>
+                <div className="title-bar">
+                    <div className="title-bar-text">Create a Server</div>
+                </div>
+                <div className="window-body">
+                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                        <label htmlFor="serverName">Server name:</label>
+                        <input
+                            id="serverName"
+                            className="input"
+                            placeholder="My server"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                            style={{ marginBottom: 16 }}
+                        />
+                        <button type="submit" className="button">Create</button>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 }

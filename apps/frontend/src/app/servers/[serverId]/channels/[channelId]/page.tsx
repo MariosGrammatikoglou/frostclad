@@ -31,23 +31,26 @@ export default function ChannelPage() {
     }, [serverId, channelId]);
 
     return (
-        <>
-            {/* Server Header */}
-            <div className="px-8 pt-5 pb-2 shrink-0">
-                <ServerHeader onChannelCreated={() => { }} />
+        <div className="window" style={{ margin: 24, flex: 1, minHeight: 400 }}>
+            <div className="title-bar">
+                <div className="title-bar-text">
+                    {activeChannel?.name ? `#${activeChannel.name}` : "Loading..."}
+                </div>
             </div>
-            {/* Chat container */}
-            <div className="flex-1 flex flex-col min-h-0 min-w-0 px-4 pb-6">
-                {!activeChannel ? (
-                    <div className="flex-1 flex items-center justify-center">
-                        <div className="border-4 border-[#bfa36f] rounded-2xl shadow-2xl bg-[#ece2cc]/80 w-full max-w-2xl p-8 font-serif text-[#6c5127] flex items-center justify-center text-lg">
+            <div className="window-body" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ marginBottom: 16 }}>
+                    <ServerHeader onChannelCreated={() => { }} />
+                </div>
+                <div style={{ flex: 1, minHeight: 250 }}>
+                    {!activeChannel ? (
+                        <div style={{ textAlign: 'center', color: "#333", padding: 16 }}>
                             Loading channel...
                         </div>
-                    </div>
-                ) : (
-                    <MessagePanel channelId={activeChannel.id} />
-                )}
+                    ) : (
+                        <MessagePanel channelId={activeChannel.id} />
+                    )}
+                </div>
             </div>
-        </>
+        </div>
     );
 }

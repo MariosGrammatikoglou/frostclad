@@ -5,18 +5,61 @@ import ChannelSidebar from '@/components/ChannelSidebar';
 
 export default function ChannelsLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex flex-row h-full w-full">
+        <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            height: '100%',
+            width: '100%',
+            background: '#c0c0c0',
+        }}>
             {/* Server Sidebar */}
-            <div className="h-full w-56 bg-[#2e2518] border-r-4 border-[#bfa36f] shadow-inner flex flex-col">
-                <Sidebar />
+            <div style={{
+                minWidth: 160,
+                background: '#d4d0c8',
+                borderRight: '2px solid #fff',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: 0,
+            }}>
+                <div className="window" style={{ height: '100%', minHeight: 0, margin: 0, borderRadius: 0 }}>
+                    <div className="title-bar">
+                        <div className="title-bar-text">Servers</div>
+                    </div>
+                    <div className="window-body" style={{ flex: 1, overflowY: 'auto', padding: 0 }}>
+                        <Sidebar />
+                    </div>
+                </div>
             </div>
-            {/* Main area: children */}
-            <div className="flex-1 flex flex-col h-full min-h-0 min-w-0 bg-[#ede1bb] border-l-2 border-r-2 border-[#bfa36f]">
+            {/* Main Content */}
+            <div style={{
+                flex: 1,
+                background: '#fff',
+                minHeight: 0,
+                minWidth: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                borderLeft: '2px solid #808080',
+                borderRight: '2px solid #808080'
+            }}>
                 {children}
             </div>
             {/* Channel Sidebar */}
-            <div className="h-full w-64 bg-[#f6e8c7] border-l-8 border-[#bfa36f] shadow-inner flex flex-col">
-                <ChannelSidebar />
+            <div style={{
+                minWidth: 200,
+                background: '#ece9d8',
+                borderLeft: '2px solid #fff',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: 0,
+            }}>
+                <div className="window" style={{ height: '100%', minHeight: 0, margin: 0, borderRadius: 0 }}>
+                    <div className="title-bar">
+                        <div className="title-bar-text">Channels</div>
+                    </div>
+                    <div className="window-body" style={{ flex: 1, overflowY: 'auto', padding: 0 }}>
+                        <ChannelSidebar />
+                    </div>
+                </div>
             </div>
         </div>
     );

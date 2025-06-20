@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import api from '@/lib/axios';
 import useAuth from '@/hooks/useAuth';
+import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 
 interface Server {
@@ -15,7 +16,6 @@ export default function ServerHubPage() {
     const router = useRouter();
     const { user, loading } = useAuth();
 
-    // ✅ Redirect to /login if user is not authenticated
     useEffect(() => {
         if (!loading && !user) {
             router.replace('/login');
@@ -27,49 +27,83 @@ export default function ServerHubPage() {
         return res.data;
     });
 
-    if (loading || isLoading) return <div className="p-4 text-white">Loading Frostclad...</div>;
-    if (error) return <div className="p-4 text-red-500">Failed to load servers</div>;
+    const handleLogout = () => {
+        Cookies.remove('token');
+        router.push('/login');
+    };
+
+    if (loading || isLoading)
+        return <div className="window p-4">Loading Frostclad...</div>;
+    if (error)
+        return <div className="window alert alert-error p-4">Failed to load servers</div>;
     if (!user) return null;
 
     return (
-        <div className="p-4 text-white">
-            <h1 className="font-bold text-2xl mb-3 tracking-widest uppercase text-[#d4bc8a] drop-shadow-md font-serif">Welcome, {user.username}</h1>
-
-            <div className="mb-6">
-                <button
-                    onClick={() => router.push('/servers/create')}
-                    className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow"
-                >
-                    Create Server
-                </button>
-                <button
-                    onClick={() => router.push('/join')}
-                    className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow"
-                >
-                    Join Server
-                </button>
+        <div className="window" style={{ minWidth: 400, maxWidth: 520, margin: "32px auto", padding: 24 }}>
+            <div className="title-bar">
+                <div className="title-bar-text">Frostclad Server Hub</div>
+                <div className="title-bar-controls">
+                    <button aria-label="Close" onClick={handleLogout} />
+                </div>
             </div>
+            <div className="window-body">
+                <h1 style={{
+                    fontSize: 20,
+                    marginBottom: 14,
+                    color: "#222",
+                    fontWeight: 700,
+                    fontFamily: '"MS Sans Serif", Tahoma, Arial, sans-serif'
+                }}>
+                    Welcome, {user.username}
+                </h1>
 
-            <div>
-                <h2 className="text-lg font-semibold mb-2">Your Servers</h2>
-                {servers?.length === 0 ? (
-                    <p className="text-gray-400">You haven’t joined any servers yet.</p>
-                ) : (
-                    <ul className="space-y-2">
-                        {servers?.map((server) => (
-                            <li key={server.id}>
-                                <button
-                                    onClick={() => router.push(`/servers/${server.id}/channels`)
-                                    }
-                                    className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow"
-                                >
-                                    {server.name}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
+                    <button
+                        className="button"
+                        style={{ minWidth: 100 }}
+                        onClick={() => router.push('/servers/create')}
+                    >
+                        🛠 Create Server
+                    </button>
+                    <button
+                        className="button"
+                        style={{ minWidth: 100 }}
+                        onClick={() => router.push('/join')}
+                    >
+                        🔑 Join Server
+                    </button>
+                </div>
 
+                <fieldset style={{ marginBottom: 16 }}>
+                    <legend>Your Servers</legend>
+                    {servers?.length === 0 ? (
+                        <div style={{ color: "#888", marginTop: 10 }}>You haven’t joined any servers yet.</div>
+                    ) : (
+                        <ul style={{ paddingLeft: 0, margin: 0 }}>
+                            {servers?.map((server) => (
+                                <li key={server.id} style={{ listStyle: 'none', marginBottom: 8 }}>
+                                    <button
+                                        className="button"
+                                        style={{ width: "100%", textAlign: "left", padding: "6px 10px" }}
+                                        onClick={() => router.push(`/servers/${server.id}/channels`)}
+                                    >
+                                        🖥️ {server.name}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </fieldset>
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button
+                        className="button"
+                        style={{ minWidth: 90 }}
+                        onClick={handleLogout}
+                    >
+                        🚪 Logout
+                    </button>
+                </div>
             </div>
         </div>
     );

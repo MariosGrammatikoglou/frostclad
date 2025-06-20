@@ -14,32 +14,36 @@ export default function CreateChannelModal({ isOpen, onClose, onSubmit }: Props)
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-            <div className="bg-[#fcf4dd] p-7 rounded-2xl shadow-2xl border-4 border-[#bfa36f] w-full max-w-sm font-serif">
-                <h2 className="text-2xl font-bold mb-5 text-[#7c5b27]">Create New Channel</h2>
-                <input
-                    type="text"
-                    placeholder="Channel name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="bg-[#ede1bb] text-[#2e2518] border-2 border-[#ad8b46] rounded-lg px-4 py-2 w-full mb-5 focus:outline-none focus:ring-2 focus:ring-[#bfa36f] font-serif"
-                />
-                <div className="flex justify-end gap-2">
-                    <button
-                        onClick={onClose}
-                        className="bg-[#bfa36f] hover:bg-[#ad8b46] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow transition"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={() => {
-                            onSubmit(name);
-                            setName('');
-                        }}
-                        className="bg-[#ad8b46] hover:bg-[#bfa36f] text-[#2d1d09] font-bold py-2 px-4 rounded-lg border border-[#d4bc8a] shadow transition"
-                    >
-                        Create
-                    </button>
+        <div style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+        }}>
+            <div className="window" style={{ minWidth: 340, maxWidth: '90vw' }}>
+                <div className="title-bar">
+                    <div className="title-bar-text">Create New Channel</div>
+                    <div className="title-bar-controls">
+                        <button aria-label="Close" onClick={onClose} />
+                    </div>
+                </div>
+                <div className="window-body" style={{ padding: 16 }}>
+                    <input
+                        type="text"
+                        placeholder="Channel name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="field"
+                        style={{ width: '100%', marginBottom: 12 }}
+                    />
+                    <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                        <button className="button" onClick={onClose}>Cancel</button>
+                        <button
+                            className="button"
+                            onClick={() => {
+                                onSubmit(name);
+                                setName('');
+                            }}
+                        >Create</button>
+                    </div>
                 </div>
             </div>
         </div>

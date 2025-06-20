@@ -15,7 +15,6 @@ export default function ChannelsRootPage() {
     const router = useRouter();
 
     useEffect(() => {
-        // Fetch channels and redirect to the first channel
         async function redirectToFirstChannel() {
             const res = await api.get(`/channels/server/${serverId}`);
             const channels: Channel[] = res.data;
@@ -28,8 +27,13 @@ export default function ChannelsRootPage() {
     }, [serverId, router]);
 
     return (
-        <div className="p-8 text-[#6c5127] font-serif">
-            Loading channels...
+        <div className="window" style={{ margin: 32, minWidth: 320 }}>
+            <div className="title-bar">
+                <div className="title-bar-text">Loading Channel</div>
+            </div>
+            <div className="window-body" style={{ color: '#222' }}>
+                Please wait, loading channels...
+            </div>
         </div>
     );
 }

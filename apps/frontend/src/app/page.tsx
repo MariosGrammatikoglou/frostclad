@@ -16,5 +16,11 @@ export default function HomePage() {
     }
   }, [user, loading]);
 
-  return <div className="p-4">Redirecting to Frostclad app...</div>;
+  return (
+    <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="status-bar">
+        <p>Redirecting to Frostclad app...</p>
+      </div>
+    </div>
+  );
 }

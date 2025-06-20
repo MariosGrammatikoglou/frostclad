@@ -19,7 +19,8 @@
     "typescript": "5.8.2"
   },
   "dependencies": {
-    "@prisma/client": "^6.8.2"
+    "@prisma/client": "^6.8.2",
+    "98.css": "^0.1.21"
   },
   "engines": {
     "node": ">=18"
