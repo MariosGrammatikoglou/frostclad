@@ -8,9 +8,7 @@ type Message = {
     id?: string;
     content: string;
     createdAt?: string;
-    user?: {
-        username: string;
-    };
+    user?: { username: string; };
 };
 
 export default function MessagePanel({ channelId }: { channelId: string }) {
@@ -20,7 +18,7 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const messagesContainerRef = useRef<HTMLDivElement | null>(null);
 
-    // Poll for new messages
+    // Fetch messages
     useEffect(() => {
         let mounted = true;
         let poller: NodeJS.Timeout;
@@ -34,23 +32,17 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
             }
         };
 
-        loadMessages(); // Initial load
-
-        poller = setInterval(loadMessages, 2000); // Poll every 2 seconds
-
-        return () => {
-            mounted = false;
-            clearInterval(poller);
-        };
+        loadMessages();
+        poller = setInterval(loadMessages, 2000);
+        return () => { mounted = false; clearInterval(poller); };
     }, [channelId]);
 
-    // Only auto-scroll if user is near bottom
+    // Only auto-scroll if user is at bottom
     useEffect(() => {
         const container = messagesContainerRef.current;
         if (!container) return;
         const threshold = 100;
         const atBottom = container.scrollHeight - container.scrollTop - container.clientHeight < threshold;
-
         if (atBottom) {
             messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
         }
@@ -58,8 +50,6 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
 
     const sendMessage = async () => {
         if (!message.trim()) return;
-
-        // Optimistic update
         const tempMessage = {
             id: 'temp-' + Date.now(),
             content: message,
@@ -68,24 +58,16 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
         };
         setMessages((prev) => [...prev, tempMessage]);
         setMessage('');
-
         try {
-            const res = await api.post(`/messages/${channelId}`, {
-                content: message,
-            });
-            setMessages((prev) =>
-                prev.map((msg) =>
-                    msg.id === tempMessage.id ? res.data : msg
-                )
-            );
-        } catch (err) {
+            const res = await api.post(`/messages/${channelId}`, { content: message });
+            setMessages((prev) => prev.map((msg) => msg.id === tempMessage.id ? res.data : msg));
+        } catch {
             setMessages((prev) => prev.filter((msg) => msg.id !== tempMessage.id));
-            console.error('Failed to send message:', err);
         }
     };
 
     return (
-        <div className="window" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <div className="window" style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', margin: 8 }}>
             <div className="title-bar">
                 <div className="title-bar-text">Channel Chat</div>
             </div>
@@ -94,46 +76,44 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
                 className="window-body"
                 style={{
                     flex: 1,
-                    overflowY: "auto",
-                    background: "#fff",
-                    padding: 8,
-                    fontFamily: 'inherit'
+                    minHeight: 0,
+                    overflowY: 'auto',
+                    background: '#fff',
+                    padding: 12,
                 }}
             >
                 {messages.map((msg, idx) => (
-                    <div key={msg.id ?? idx} style={{
-                        marginBottom: 8,
-                        padding: 6,
-                        border: "1px solid #c0c0c0",
-                        background: "#e9e9e9"
-                    }}>
+                    <div
+                        key={msg.id ?? idx}
+                        style={{
+                            marginBottom: 6,
+                            padding: "7px 12px",
+                            background: "#eee",
+                            border: "1px solid #bbb",
+                            fontSize: 15,
+                        }}
+                    >
                         <b>{msg.user?.username ?? 'Unknown'}:</b> {msg.content}
                     </div>
                 ))}
                 <div ref={messagesEndRef} />
             </div>
             <form
-                onSubmit={e => {
-                    e.preventDefault();
-                    sendMessage();
-                }}
-                style={{
-                    display: "flex",
-                    gap: 4,
-                    padding: 8,
-                    borderTop: "2px solid #c0c0c0",
-                    background: "#dfdfdf"
-                }}
+                className="window-body"
+                style={{ display: "flex", borderTop: "1px solid #ccc", gap: 8, background: "#eee", margin: 0 }}
+                onSubmit={e => { e.preventDefault(); sendMessage(); }}
             >
                 <input
-                    className="field"
+                    className="input"
                     style={{ flex: 1 }}
-                    placeholder="Type a message..."
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                    placeholder="Type a message..."
+                    onChange={e => setMessage(e.target.value)}
+                    onKeyDown={e => { if (e.key === "Enter") sendMessage(); }}
                 />
-                <button type="submit" className="button">Send</button>
+                <button type="submit" className="button" style={{ minWidth: 80 }}>
+                    Send
+                </button>
             </form>
         </div>
     );
