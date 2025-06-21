@@ -1,0 +1,52 @@
+/* apps/frontend/src/app/globals.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "98.css/dist/98.css";
+
+:root {
+  --background: #c0c0c0;
+  --foreground: #222;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body.app-window {
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
+  overflow: hidden;
+  /* avoids outer scrollbars */
+}
+
+/* Title bar */
+.title-bar {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  background: #000080;
+  /* Win98 blue */
+  color: white;
+}
+
+.title-bar-text {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+/* Content area */
+.window-body {
+  flex: 1;
+  overflow: auto;
+  /* scroll if content too big */
+  padding: 8px;
+}

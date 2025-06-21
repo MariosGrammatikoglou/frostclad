@@ -23,7 +23,7 @@ export default function Sidebar() {
     };
 
     return (
-        <div className="window" style={{ margin: 8, height: 'calc(100% - 16px)', minWidth: 220, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ margin: 8, height: 'calc(100% - 16px)', minWidth: 220, display: 'flex', flexDirection: 'column' }}>
             <div className="title-bar">
                 <div className="title-bar-text">Servers</div>
             </div>

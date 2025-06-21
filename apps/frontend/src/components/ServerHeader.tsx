@@ -64,7 +64,7 @@ export default function ServerHeader({ onChannelCreated }: ServerHeaderProps) {
 
     return (
         <div style={{ marginBottom: 10 }}>
-            <div className="window" style={{ width: "100%" }}>
+            <div style={{ width: "100%" }}>
                 <div className="title-bar">
                     <div className="title-bar-text">{server.name}</div>
                 </div>

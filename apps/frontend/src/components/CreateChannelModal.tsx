@@ -18,7 +18,7 @@ export default function CreateChannelModal({ isOpen, onClose, onSubmit }: Props)
             position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
         }}>
-            <div className="window" style={{ minWidth: 340, maxWidth: '90vw' }}>
+            <div style={{ minWidth: 340, maxWidth: '90vw' }}>
                 <div className="title-bar">
                     <div className="title-bar-text">Create New Channel</div>
                     <div className="title-bar-controls">

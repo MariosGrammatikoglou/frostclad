@@ -39,7 +39,7 @@ export default function ServerHubPage() {
     if (!user) return null;
 
     return (
-        <div className="window" style={{ minWidth: 400, maxWidth: 520, margin: "32px auto", padding: 24 }}>
+        <div style={{ minWidth: 400, maxWidth: 520, margin: "32px auto", padding: 24 }}>
             <div className="title-bar">
                 <div className="title-bar-text">Frostclad Server Hub</div>
 

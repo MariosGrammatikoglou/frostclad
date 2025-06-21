@@ -31,7 +31,7 @@ export default function ChannelPage() {
     }, [serverId, channelId]);
 
     return (
-        <div className="window" style={{
+        <div style={{
             margin: 24,
             flex: 1,
             minHeight: 400,
