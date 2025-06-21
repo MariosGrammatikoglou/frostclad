@@ -15,12 +15,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Title bar */}
         <div className="title-bar">
           <div className="title-bar-text">Frostclad — Retro Chat</div>
+          <div>   {children}</div>
         </div>
 
-        {/* Content full-screen */}
-        <div className="window-body">
-          {children}
-        </div>
+
       </body>
     </html>
   );
