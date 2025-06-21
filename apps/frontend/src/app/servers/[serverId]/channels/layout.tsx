@@ -11,7 +11,7 @@ export default function ChannelsLayout({ children }: { children: React.ReactNode
                 <Sidebar />
             </div>
             {/* Main area: children */}
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0, minWidth: 0, background: "#eee" }}>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0, minWidth: 0, background: "#c0c0c0" }}>
                 {children}
             </div>
             {/* Channel Sidebar */}
