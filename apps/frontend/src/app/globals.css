@@ -1,85 +1,21 @@
 @import "tailwindcss";
+@import "98.css";
+/* Make sure this path matches your node_modules or public dir */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #c0c0c0;
+  /* Classic Win98 gray */
+  --foreground: #222222;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "MS Sans Serif", "Tahoma", Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.medieval-chatbox {
-  background:
-    repeating-linear-gradient(0deg, #f6e7cb 0px, #f6e7cb 29px, #f4e3be 30px, #f4e3be 32px),
-    linear-gradient(135deg, #e5d2a6 0%, #f6e7cb 100%);
-  border: 3px solid #a8843a;
-  border-radius: 24px 36px 18px 28px;
-  box-shadow:
-    0 8px 30px 0 #3a2712bb,
-    0 0 0 12px #a8843a33 inset;
-  font-family: 'IM Fell English SC', serif;
-  /* Subtle wrinkled paper edge */
-  filter: drop-shadow(0 2px 10px #9b7e3d66);
-  position: relative;
-}
+/* Remove all old .medieval-* and theme-related classes */
 
-.medieval-chatbox::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  border: 1.5px dashed #cfb27288;
-  opacity: 0.45;
-}
-
-.medieval-sidebar {
-  background: repeating-linear-gradient(135deg, #4b342e, #4b342e 40px, #3b240b 60px, #4b342e 100px);
-  /* Papyrus-like look: a little texture and warm brown color */
-  box-shadow: 0 8px 32px #000a;
-  border-left: 8px solid #bfa36f;
-  font-family: 'IM Fell English SC', serif;
-}
-
-/* globals.css */
-
-.medieval-scrollbar::-webkit-scrollbar {
-  width: 12px;
-  background: #e5dab3;
-  border-radius: 8px;
-}
-
-.medieval-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(120deg, #ad8b46 60%, #e5dab3 100%);
-  border-radius: 8px;
-  border: 2px solid #c9ac70;
-  box-shadow: 0 2px 6px #bfa36f44;
-}
-
-.medieval-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(120deg, #bfa36f 60%, #ad8b46 100%);
-}
-
-/* Firefox support */
-.medieval-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #ad8b46 #e5dab3;
-}
+/* You can keep Tailwind utility classes if you use them! */

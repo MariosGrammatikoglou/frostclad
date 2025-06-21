@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -6,7 +6,7 @@ function createWindow() {
         height: 800,
         resizable: false,
         frame: false,        // ☑️ Removes the OS title bar and frame
-        icon: path.join(__dirname, 'assets', 'frostclad.ico'),
+
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -22,6 +22,15 @@ function createWindow() {
         win.loadURL('https://frostclad-frontend.vercel.app');
     }
 }
+
+
+ipcMain.on('window-minimize', () => BrowserWindow.getFocusedWindow()?.minimize());
+ipcMain.on('window-maximize', () => {
+    const w = BrowserWindow.getFocusedWindow();
+    w?.isMaximized() ? w.unmaximize() : w.maximize();
+});
+ipcMain.on('window-close', () => BrowserWindow.getFocusedWindow()?.close());
+
 
 // App ready
 app.whenReady().then(createWindow);
