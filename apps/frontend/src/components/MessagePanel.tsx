@@ -89,7 +89,7 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
         <div
             className="window"
             style={{
-                height: 500,
+                height: 600,
                 minWidth: 330,
                 display: 'flex',
                 flexDirection: 'column',

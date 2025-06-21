@@ -34,7 +34,7 @@ export default function ChannelPage() {
         <div className="window" style={{
             margin: 24,
             flex: 1,
-            minHeight: 550,
+            minHeight: 600,
             background: 'var(--background)'
         }}>
             <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
