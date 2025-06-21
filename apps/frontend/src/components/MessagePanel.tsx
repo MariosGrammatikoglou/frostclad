@@ -91,7 +91,7 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
         <div
             className="window"
             style={{
-                height: 480, // fixed, classic IM size
+                height: 400, // fixed, classic IM size
                 minWidth: 330,
                 display: 'flex',
                 flexDirection: 'column',
