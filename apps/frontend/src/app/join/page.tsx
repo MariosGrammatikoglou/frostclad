@@ -27,7 +27,7 @@ export default function JoinPage() {
     };
 
     return (
-        <div style={{ maxWidth: 400, margin: "64px auto", padding: 24 }}>
+        <div className="window" style={{ maxWidth: 400, margin: "64px auto", padding: 24 }}>
             <div className="title-bar"><div className="title-bar-text">Join a Server</div></div>
             <div className="window-body">
                 <form onSubmit={handleJoin}>

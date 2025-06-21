@@ -14,7 +14,7 @@ export default function LeaveServerModal({ isOpen, onClose, onConfirm }: Props) 
             position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
         }}>
-            <div style={{ minWidth: 320, maxWidth: '90vw' }}>
+            <div className="window" style={{ minWidth: 320, maxWidth: '90vw' }}>
                 <div className="title-bar">
                     <div className="title-bar-text">Leave Server?</div>
                     <div className="title-bar-controls">

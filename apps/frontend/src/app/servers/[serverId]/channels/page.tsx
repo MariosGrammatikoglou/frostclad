@@ -27,7 +27,7 @@ export default function ChannelsRootPage() {
     }, [serverId, router]);
 
     return (
-        <div style={{ margin: 32, minWidth: 320 }}>
+        <div className="window" style={{ margin: 32, minWidth: 320 }}>
             <div className="title-bar">
                 <div className="title-bar-text">Loading Channel</div>
             </div>

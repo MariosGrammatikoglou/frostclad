@@ -30,7 +30,7 @@ export default function ChannelSidebar() {
     };
 
     return (
-        <div style={{ margin: 8, height: 'calc(100% - 16px)', minWidth: 220 }}>
+        <div className="window" style={{ margin: 8, height: 'calc(100% - 16px)', minWidth: 220 }}>
             <div className="title-bar">
                 <div className="title-bar-text">Channels</div>
             </div>

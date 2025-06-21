@@ -25,7 +25,7 @@ export default function RegisterPage() {
     };
 
     return (
-        <div style={{ width: 350, margin: "4rem auto" }}>
+        <div className="window" style={{ width: 350, margin: "4rem auto" }}>
             <div className="title-bar">
                 <div className="title-bar-text">Register</div>
             </div>
