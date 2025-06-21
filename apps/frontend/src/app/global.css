@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* Win98 UI styles */
 @import "98.css/dist/98.css";
 
 :root {
@@ -24,32 +25,27 @@ body.app-window {
   color: var(--foreground);
   font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
   overflow: hidden;
-  /* no outer scrollbars */
+  /* No outer scrollbars */
 }
 
-/* 🖥️ Top Title Bar */
 .title-bar {
   display: flex;
   align-items: center;
   height: 28px;
   background: #000080;
-  /* retro blue */
+  /* Win98 classic blue */
   color: white;
+  padding: 0 8px;
 }
 
-.title-bar-text {
-  margin-left: 8px;
+.title-bar .title-bar-text {
   font-size: 14px;
+  line-height: 28px;
 }
 
-/* 🧩 Main content fills window */
 .content-area {
   flex: 1;
-  overflow: auto;
+  overflow-y: auto;
+  /* inner scrolling only */
   padding: 12px;
-}
-
-/* Optional: style internal elements */
-.content-area>* {
-  margin-bottom: 1rem;
 }
