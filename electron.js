@@ -4,13 +4,15 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 1200,
         height: 800,
-        // Optional: Uncomment frame: false for fully custom Win98 title bar!
-        // frame: false, // <- Use this for custom, draggable title bar with 98.css (see notes below)
+        resizable: false,
+        frame: false,        // ☑️ Removes the OS title bar and frame
+        icon: path.join(__dirname, 'assets', 'frostclad.ico'),
         webPreferences: {
-            nodeIntegration: false, // Good security (keep it false)
-            contextIsolation: true, // Good security (keep it true)
+            nodeIntegration: false,
+            contextIsolation: true,
         }
     });
+
 
     // Load local app in development, Vercel in production
     const isDev = !app.isPackaged;
