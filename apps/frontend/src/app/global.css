@@ -1,6 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
 @import "98.css/dist/98.css";
 
 :root {
@@ -23,16 +24,16 @@ body.app-window {
   color: var(--foreground);
   font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
   overflow: hidden;
-  /* prevents scrollbars on body */
+  /* no outer scrollbars */
 }
 
-/* Title bar styling */
+/* 🖥️ Top Title Bar */
 .title-bar {
   display: flex;
   align-items: center;
   height: 28px;
   background: #000080;
-  /* Win98 blue */
+  /* retro blue */
   color: white;
 }
 
@@ -41,9 +42,14 @@ body.app-window {
   font-size: 14px;
 }
 
-/* Main content fills entire space */
+/* 🧩 Main content fills window */
 .content-area {
   flex: 1;
   overflow: auto;
-  /* scroll if needed */
+  padding: 12px;
+}
+
+/* Optional: style internal elements */
+.content-area>* {
+  margin-bottom: 1rem;
 }
