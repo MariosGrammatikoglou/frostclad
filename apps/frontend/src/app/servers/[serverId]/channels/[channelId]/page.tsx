@@ -39,7 +39,7 @@ export default function ChannelPage() {
         }}>
             <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
                 <div className="title-bar-text">
-                    {activeChannel?.name ? `#${activeChannel.name}` : "Loading..."}
+                    Frostclad_v.0.0.1
                 </div>
             </div>
             <div className="window-body" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -52,7 +52,10 @@ export default function ChannelPage() {
                             Loading channel...
                         </div>
                     ) : (
-                        <MessagePanel channelId={activeChannel.id} />
+                        <MessagePanel
+                            channelId={activeChannel.id}
+                            channelName={`#${activeChannel.name}`}
+                        />
                     )}
                 </div>
             </div>

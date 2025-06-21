@@ -49,6 +49,7 @@ export default function RegisterPage() {
                             type="text"
                             name="username"
                             autoComplete="username"
+                            maxLength={14}
                             onChange={handleChange}
                             required
                         />

@@ -13,7 +13,13 @@ type Message = {
     };
 };
 
-export default function MessagePanel({ channelId }: { channelId: string }) {
+export default function MessagePanel({
+    channelId,
+    channelName
+}: {
+    channelId: string;
+    channelName: string;
+}) {
     const { user } = useAuth();
     const [messages, setMessages] = useState<Message[]>([]);
     const [message, setMessage] = useState('');
@@ -99,7 +105,7 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
             }}
         >
             <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
-                <div className="title-bar-text">Chat Area</div>
+                <div className="title-bar-text">{channelName}</div>
             </div>
             <div
                 ref={messagesContainerRef}
@@ -114,7 +120,7 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
                     marginBottom: 0,
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'start', // center message area
+                    alignItems: 'start',
                 }}
             >
                 <div style={{ width: '100%', maxWidth: 560, display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -132,7 +138,6 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
                                 width: '100%',
                                 maxWidth: '100%',
                                 wordBreak: 'break-word',
-                                // No flex or alignSelf here!
                             }}
                         >
                             <span style={{ fontWeight: 'bold', color: '#00509E', marginRight: 4, whiteSpace: 'nowrap' }}>
