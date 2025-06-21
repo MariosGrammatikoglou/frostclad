@@ -31,7 +31,12 @@ export default function ChannelPage() {
     }, [serverId, channelId]);
 
     return (
-        <div className="window" style={{ margin: 24, flex: 1, minHeight: 400 }}>
+        <div className="window" style={{
+            margin: 24,
+            flex: 1,
+            minHeight: 400,
+            background: '#efefef'
+        }}>
             <div className="title-bar">
                 <div className="title-bar-text">
                     {activeChannel?.name ? `#${activeChannel.name}` : "Loading..."}
