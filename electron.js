@@ -2,8 +2,8 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 1200,
-        height: 800,
+        width: 1400,
+        height: 950,
         resizable: false,
         frame: false,        // ☑️ Removes the OS title bar and frame
 
