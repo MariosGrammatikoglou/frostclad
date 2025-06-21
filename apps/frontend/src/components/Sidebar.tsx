@@ -64,7 +64,7 @@ export default function Sidebar() {
 
                 <div
                     style={{
-                        height: '75%',
+                        height: '80%',
                         overflowY: 'auto',
                         marginBottom: 10,
                     }}
