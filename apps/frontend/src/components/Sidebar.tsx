@@ -61,10 +61,10 @@ export default function Sidebar() {
                     </button>
                 </div>
                 <b style={{ marginBottom: 10, display: "block" }}>Servers</b>
-                {/* Server list: 75% height, scrollable */}
+
                 <div
                     style={{
-                        height: '65%',
+                        height: '75%',
                         overflowY: 'auto',
                         marginBottom: 10,
                     }}
