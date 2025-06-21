@@ -3,8 +3,6 @@
 import Sidebar from '@/components/Sidebar';
 import ChannelSidebar from '@/components/ChannelSidebar';
 
-
-// ChannelsLayout.tsx
 export default function ChannelsLayout({ children }: { children: React.ReactNode }) {
     return (
         <div
@@ -16,7 +14,7 @@ export default function ChannelsLayout({ children }: { children: React.ReactNode
                 background: 'var(--background)',
             }}
         >
-            <div style={{ display: 'flex', height: '70vh', width: '70vw' }}>
+            <div style={{ display: 'flex', height: '70vh', width: '80vw' }}>
                 {/* Server Sidebar */}
                 <div style={{ width: 240, minWidth: 200, height: "100%" }}>
                     <Sidebar />
@@ -33,8 +31,3 @@ export default function ChannelsLayout({ children }: { children: React.ReactNode
         </div>
     );
 }
-
-
-
-
-

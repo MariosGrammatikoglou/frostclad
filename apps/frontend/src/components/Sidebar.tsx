@@ -64,7 +64,7 @@ export default function Sidebar() {
                 {/* Server list: 75% height, scrollable */}
                 <div
                     style={{
-                        height: '70%',
+                        height: '65%',
                         overflowY: 'auto',
                         marginBottom: 10,
                     }}
