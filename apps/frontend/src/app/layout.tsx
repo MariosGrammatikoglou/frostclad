@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="app-window" >
-        {/* Title bar */}
-        <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
-          <div className="title-bar-text">Frostclad — Retro Chat</div>
-        </div>
-
-        {/* Content full-screen */}
-        <div className="window-body">
-          {children}
-        </div>
+      <body className="app-window" style={{
+        width: "100vw",
+        height: "100vh",
+        margin: 0,
+        padding: 0,
+        overflow: "hidden",
+        background: "var(--background)"
+      }}>
+        {/* REMOVE outer title bar and window-body */}
+        {children}
       </body>
     </html>
   );
