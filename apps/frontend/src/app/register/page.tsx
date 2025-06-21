@@ -26,7 +26,7 @@ export default function RegisterPage() {
 
     return (
         <div className="window" style={{ width: 350, margin: "4rem auto" }}>
-            <div className="title-bar">
+            <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
                 <div className="title-bar-text">Register</div>
             </div>
             <div className="window-body">

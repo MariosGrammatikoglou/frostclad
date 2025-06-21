@@ -15,7 +15,7 @@ export default function LeaveServerModal({ isOpen, onClose, onConfirm }: Props) 
             display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
         }}>
             <div className="window" style={{ minWidth: 320, maxWidth: '90vw' }}>
-                <div className="title-bar">
+                <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
                     <div className="title-bar-text">Leave Server?</div>
                     <div className="title-bar-controls">
                         <button aria-label="Close" onClick={onClose} />

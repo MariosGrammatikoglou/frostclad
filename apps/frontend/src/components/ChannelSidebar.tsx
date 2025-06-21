@@ -4,9 +4,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import api from '@/lib/axios';
 
-console.log('➡️ NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
-
-
 interface Channel {
     id: string;
     name: string;
@@ -30,27 +27,49 @@ export default function ChannelSidebar() {
     };
 
     return (
-        <div className="window" style={{ margin: 8, height: 'calc(100% - 16px)', minWidth: 220 }}>
-            <div className="title-bar">
+        <div
+            className="window"
+            style={{
+                height: '100%',
+                minWidth: 220,
+                display: 'flex',
+                flexDirection: 'column'
+            }}
+        >
+            <div
+                className="title-bar"
+                style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}
+            >
                 <div className="title-bar-text">Channels</div>
             </div>
-            <div className="window-body">
+            <div className="window-body" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <b style={{ fontSize: 16, marginBottom: 12, display: "block" }}>📌 Text Channels</b>
-                {textChannels.map(channel => (
-                    <button
-                        key={channel.id}
-                        onClick={() => handleTextClick(channel.id)}
-                        className="button"
-                        style={{
-                            width: "100%",
-                            marginBottom: 8,
-                            background: channel.id === channelId ? "#00808022" : undefined,
-                            fontWeight: channel.id === channelId ? "bold" : undefined,
-                        }}
-                    >
-                        # {channel.name}
-                    </button>
-                ))}
+                <div
+                    style={{
+                        flex: 1,
+                        overflowY: 'auto',
+                        marginBottom: 8,
+                    }}
+                >
+                    {textChannels.map(channel => (
+                        <button
+                            key={channel.id}
+                            onClick={() => handleTextClick(channel.id)}
+                            className="button"
+                            style={{
+                                width: "100%",
+                                marginBottom: 8,
+                                background: channel.id === channelId ? "#00808022" : undefined,
+                                fontWeight: channel.id === channelId ? "bold" : undefined,
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                            }}
+                        >
+                            # {channel.name}
+                        </button>
+                    ))}
+                </div>
             </div>
         </div>
     );

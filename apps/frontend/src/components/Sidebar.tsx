@@ -23,24 +23,85 @@ export default function Sidebar() {
     };
 
     return (
-        <div className="window" style={{ margin: 8, height: 'calc(100% - 16px)', minWidth: 220, display: 'flex', flexDirection: 'column' }}>
-            <div className="title-bar">
+        <div
+            className="window"
+            style={{
+                height: '100%',
+                minWidth: 220,
+                display: 'flex',
+                flexDirection: 'column',
+            }}
+        >
+            <div
+                className="title-bar"
+                style={{
+                    paddingLeft: '8px',
+                    paddingTop: '4px',
+                    paddingBottom: '4px',
+                }}
+            >
                 <div className="title-bar-text">Servers</div>
             </div>
-            <div className="window-body" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <div
+                className="window-body"
+                style={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: 0,
+                }}
+            >
                 <div>
-                    <button className="button" style={{ width: "100%", marginBottom: 10 }} onClick={() => router.push('/servers')}>← Back to Hub</button>
+                    <button
+                        className="button"
+                        style={{ width: "100%", marginBottom: 10 }}
+                        onClick={() => router.push('/servers')}
+                    >
+                        ← Back to Hub
+                    </button>
                 </div>
                 <b style={{ marginBottom: 10, display: "block" }}>Servers</b>
-                <ul style={{ paddingLeft: 0, margin: 0, marginBottom: 10 }}>
-                    {servers?.map((s: Server) => (
-                        <li key={s.id} style={{ listStyle: 'none', marginBottom: 6 }}>
-                            <Link href={`/servers/${s.id}/channels`} className="link">{s.name}</Link>
-                        </li>
-                    ))}
-                </ul>
+                {/* Server list: 75% height, scrollable */}
+                <div
+                    style={{
+                        height: '70%',
+                        overflowY: 'auto',
+                        marginBottom: 10,
+                    }}
+                >
+                    <ul
+                        style={{
+                            paddingLeft: 0,
+                            margin: 0,
+                        }}
+                    >
+                        {servers?.map((s: Server) => (
+                            <li
+                                key={s.id}
+                                style={{ listStyle: 'none', marginBottom: 6 }}
+                            >
+                                <Link
+                                    href={`/servers/${s.id}/channels`}
+                                    className="link"
+                                >
+                                    {s.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <button
+                    className="button"
+                    style={{
+                        width: "100%",
+                        marginBottom: 0,
+                    }}
+                    onClick={handleLogout}
+                >
+                    Logout
+                </button>
                 <div style={{ flex: 1 }} />
-                <button className="button" style={{ width: "100%" }} onClick={handleLogout}>Logout</button>
+
             </div>
         </div>
     );

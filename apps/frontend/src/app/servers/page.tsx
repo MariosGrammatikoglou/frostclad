@@ -40,9 +40,8 @@ export default function ServerHubPage() {
 
     return (
         <div className="window" style={{ minWidth: 400, maxWidth: 520, margin: "32px auto", padding: 24 }}>
-            <div className="title-bar">
+            <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
                 <div className="title-bar-text">Frostclad Server Hub</div>
-
             </div>
             <div className="window-body">
                 <h1 style={{
@@ -77,19 +76,31 @@ export default function ServerHubPage() {
                     {servers?.length === 0 ? (
                         <div style={{ color: "#888", marginTop: 10 }}>You haven’t joined any servers yet.</div>
                     ) : (
-                        <ul style={{ paddingLeft: 0, margin: 0 }}>
-                            {servers?.map((server) => (
-                                <li key={server.id} style={{ listStyle: 'none', marginBottom: 8 }}>
-                                    <button
-                                        className="button"
-                                        style={{ width: "100%", textAlign: "left", padding: "6px 10px" }}
-                                        onClick={() => router.push(`/servers/${server.id}/channels`)}
-                                    >
-                                        🖥️ {server.name}
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
+                        <div
+                            style={{
+                                maxHeight: '350px',      // Or use '60vh'
+                                overflowY: 'auto',
+                                paddingRight: 2,
+                            }}
+                        >
+                            <ul style={{ paddingLeft: 0, margin: 0 }}>
+                                {servers?.map((server) => (
+                                    <li key={server.id} style={{ listStyle: 'none', marginBottom: 8 }}>
+                                        <button
+                                            className="button"
+                                            style={{
+                                                width: "100%",
+                                                textAlign: "left",
+                                                padding: "6px 10px"
+                                            }}
+                                            onClick={() => router.push(`/servers/${server.id}/channels`)}
+                                        >
+                                            🖥️ {server.name}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     )}
                 </fieldset>
 

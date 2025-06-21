@@ -32,12 +32,12 @@ export default function ChannelPage() {
 
     return (
         <div className="window" style={{
-            margin: 24,
-            flex: 1,
-            minHeight: 400,
-            background: 'var(--background)'
+            height: '100%',
+            background: 'var(--background)',
+            display: 'flex',
+            flexDirection: 'column',
         }}>
-            <div className="title-bar">
+            <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
                 <div className="title-bar-text">
                     {activeChannel?.name ? `#${activeChannel.name}` : "Loading..."}
                 </div>

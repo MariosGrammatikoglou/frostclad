@@ -19,7 +19,7 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
     const [message, setMessage] = useState('');
     const messagesContainerRef = useRef<HTMLDivElement | null>(null);
 
-    // Fetch messages
+    // Fetch messages (polling)
     useEffect(() => {
         let mounted = true;
         let poller: NodeJS.Timeout;
@@ -47,14 +47,12 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
         const container = messagesContainerRef.current;
         if (!container) return;
 
-        // Only scroll if user is near the bottom (classic chat UX)
         const threshold = 40;
         const atBottom = container.scrollHeight - container.scrollTop - container.clientHeight < threshold;
 
         if (atBottom) {
             container.scrollTop = container.scrollHeight;
         }
-        // If not at bottom, do not auto-scroll!
     }, [messages]);
 
     const sendMessage = async () => {
@@ -91,7 +89,7 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
         <div
             className="window"
             style={{
-                height: 400, // fixed, classic IM size
+                height: 400,
                 minWidth: 330,
                 display: 'flex',
                 flexDirection: 'column',
@@ -100,8 +98,8 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
                 background: '#efefef'
             }}
         >
-            <div className="title-bar">
-                <div className="title-bar-text">Channel Chat</div>
+            <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
+                <div className="title-bar-text">Chat Area</div>
             </div>
             <div
                 ref={messagesContainerRef}
@@ -110,43 +108,52 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
                     flex: 1,
                     overflowY: 'auto',
                     background: '#efefef',
-                    padding: 8,
+                    padding: '12px 0 8px 0',
+                    marginLeft: '12px',
                     border: 'none',
-                    marginBottom: 0
+                    marginBottom: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'start', // center message area
                 }}
             >
-                {messages.map((msg, idx) => (
-                    <div
-                        key={msg.id ?? idx}
-                        className="field-row"
-                        style={{
-                            background: '#fff',
-                            border: '1px solid #bbb',
-                            marginBottom: 6,
-                            borderRadius: 2,
-                            padding: '4px 8px',
-                            fontSize: 14,
-                            display: 'flex',
-                            alignItems: 'center',
-                            minHeight: 26,
-                            maxWidth: 320,
-                            wordBreak: 'break-word',
-                            boxShadow: '0 1px 0 #eee'
-                        }}
-                    >
-                        <span style={{ fontWeight: 'bold', color: '#00509E', marginRight: 4 }}>
-                            {msg.user?.username ?? 'Unknown'}:
-                        </span>
-                        <span>{msg.content}</span>
-                    </div>
-                ))}
+                <div style={{ width: '100%', maxWidth: 640, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    {messages.map((msg, idx) => (
+                        <div
+                            key={msg.id ?? idx}
+                            style={{
+                                background: '#fff',
+                                border: '1px solid #bbb',
+                                borderRadius: 2,
+                                padding: '4px 12px',
+                                fontSize: 14,
+                                marginBottom: 4,
+                                boxShadow: '0 1px 0 #eee',
+                                width: '100%',
+                                maxWidth: '100%',
+                                wordBreak: 'break-word',
+                                // No flex or alignSelf here!
+                            }}
+                        >
+                            <span style={{ fontWeight: 'bold', color: '#00509E', marginRight: 4, whiteSpace: 'nowrap' }}>
+                                {msg.user?.username ?? 'Unknown'}:
+                            </span>
+                            <span style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
             <form
                 onSubmit={e => {
                     e.preventDefault();
                     sendMessage();
                 }}
-                style={{ display: 'flex', borderTop: '1px solid #b0b0b0', padding: 6, background: '#ddd' }}
+                style={{
+                    display: 'flex',
+                    borderTop: '1px solid #b0b0b0',
+                    padding: 6,
+                    background: '#ddd'
+                }}
             >
                 <input
                     type="text"
@@ -155,7 +162,9 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
                     value={message}
                     style={{ flex: 1, marginRight: 8, minHeight: 28, fontSize: 14 }}
                     onChange={e => setMessage(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && sendMessage()}
+                    onKeyDown={e => {
+                        if (e.key === 'Enter') sendMessage();
+                    }}
                 />
                 <button type="submit" className="button">Send</button>
             </form>

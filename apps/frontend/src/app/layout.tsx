@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="app-window">
+      <body className="app-window" >
         {/* Title bar */}
-        <div className="title-bar">
+        <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
           <div className="title-bar-text">Frostclad — Retro Chat</div>
         </div>
 

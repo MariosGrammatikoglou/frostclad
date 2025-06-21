@@ -28,7 +28,7 @@ export default function ChannelsRootPage() {
 
     return (
         <div className="window" style={{ margin: 32, minWidth: 320 }}>
-            <div className="title-bar">
+            <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
                 <div className="title-bar-text">Loading Channel</div>
             </div>
             <div className="window-body" style={{ color: '#222' }}>

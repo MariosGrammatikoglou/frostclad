@@ -25,7 +25,7 @@ export default function CreateServerPage() {
 
     return (
         <div className="window" style={{ maxWidth: 400, margin: "64px auto", padding: 24 }}>
-            <div className="title-bar"><div className="title-bar-text">Create a Server</div></div>
+            <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}><div className="title-bar-text">Create a Server</div></div>
             <div className="window-body">
                 <form onSubmit={handleSubmit}>
                     <input
@@ -35,6 +35,7 @@ export default function CreateServerPage() {
                         onChange={(e) => setName(e.target.value)}
                         required
                         style={{ width: "100%", marginBottom: 16 }}
+                        maxLength={24}
                     />
                     <div style={{ display: 'flex', gap: 8 }}>
                         <button type="submit" className="button" style={{ minWidth: 90 }}>Create</button>
