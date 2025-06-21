@@ -42,9 +42,7 @@ export default function ServerHubPage() {
         <div className="window" style={{ minWidth: 400, maxWidth: 520, margin: "32px auto", padding: 24 }}>
             <div className="title-bar">
                 <div className="title-bar-text">Frostclad Server Hub</div>
-                <div className="title-bar-controls">
-                    <button aria-label="Close" onClick={handleLogout} />
-                </div>
+
             </div>
             <div className="window-body">
                 <h1 style={{
