@@ -117,7 +117,7 @@ export default function MessagePanel({ channelId }: { channelId: string }) {
                     alignItems: 'start', // center message area
                 }}
             >
-                <div style={{ width: '100%', maxWidth: 600, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <div style={{ width: '100%', maxWidth: 560, display: 'flex', flexDirection: 'column', gap: 4 }}>
                     {messages.map((msg, idx) => (
                         <div
                             key={msg.id ?? idx}
