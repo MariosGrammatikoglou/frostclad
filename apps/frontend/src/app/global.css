@@ -1,8 +1,6 @@
-/* apps/frontend/src/app/globals.css */
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
 @import "98.css/dist/98.css";
 
 :root {
@@ -25,10 +23,10 @@ body.app-window {
   color: var(--foreground);
   font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
   overflow: hidden;
-  /* avoids outer scrollbars */
+  /* prevents scrollbars on body */
 }
 
-/* Title bar */
+/* Title bar styling */
 .title-bar {
   display: flex;
   align-items: center;
@@ -43,10 +41,9 @@ body.app-window {
   font-size: 14px;
 }
 
-/* Content area */
-.window-body {
+/* Main content fills entire space */
+.content-area {
   flex: 1;
   overflow: auto;
-  /* scroll if content too big */
-  padding: 8px;
+  /* scroll if needed */
 }

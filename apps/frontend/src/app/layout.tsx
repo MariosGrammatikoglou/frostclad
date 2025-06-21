@@ -1,7 +1,6 @@
-// apps/frontend/src/app/layout.tsx
+// app/frontend/src/app/layout.tsx
 import type { Metadata } from 'next';
 import './global.css';
-import '98.css';
 
 export const metadata: Metadata = {
   title: 'Frostclad',
@@ -10,17 +9,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ height: '100%', margin: 0 }}>
       <body className="app-window">
-        {/* Win98 title bar */}
+        {/* Title bar */}
         <div className="title-bar">
           <div className="title-bar-text">Frostclad — Retro Chat</div>
         </div>
 
-        {/* Main content stretching full window */}
-        <div className="window-body">
-          {children}
-        </div>
+        {/* Main content takes full window */}
+        <div className="content-area">{children}</div>
       </body>
     </html>
   );
