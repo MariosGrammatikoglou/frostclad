@@ -35,7 +35,7 @@ export default function ChannelPage() {
             margin: 24,
             flex: 1,
             minHeight: 400,
-            background: '#efefef'
+            background: 'var(--background)'
         }}>
             <div className="title-bar">
                 <div className="title-bar-text">
