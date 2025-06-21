@@ -3,10 +3,21 @@
 import Sidebar from '@/components/Sidebar';
 import ChannelSidebar from '@/components/ChannelSidebar';
 
+
+// ChannelsLayout.tsx
 export default function ChannelsLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="mx-auto my-8" style={{ width: '70%', height: '70%' }}>
-            <div style={{ display: 'flex', height: '100%', width: '100%' }}>
+        <div
+            style={{
+                minHeight: '100vh',
+                width: '100vw',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'var(--background)', // your retro bg
+            }}
+        >
+            <div style={{ display: 'flex', height: '70vh', width: '70vw' }}>
                 {/* Server Sidebar */}
                 <div style={{ width: 240, minWidth: 200, height: "100%" }}>
                     <Sidebar />
@@ -23,5 +34,7 @@ export default function ChannelsLayout({ children }: { children: React.ReactNode
         </div>
     );
 }
+
+
 
 
