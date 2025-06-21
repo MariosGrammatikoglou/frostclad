@@ -1,5 +1,7 @@
+// apps/frontend/src/app/layout.tsx
 import type { Metadata } from 'next';
 import './global.css';
+import '98.css';
 
 export const metadata: Metadata = {
   title: 'Frostclad',
@@ -8,15 +10,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" style={{ height: '100%', margin: 0 }}>
+    <html lang="en">
       <body className="app-window">
-        {/* 🏷️ Top Title Bar */}
+        {/* Title bar */}
         <div className="title-bar">
           <div className="title-bar-text">Frostclad — Retro Chat</div>
         </div>
 
-        {/* 📦 Content area filling entire window */}
-        <div className="content-area">{children}</div>
+        {/* Content full-screen */}
+        <div className="window-body">
+          {children}
+        </div>
       </body>
     </html>
   );

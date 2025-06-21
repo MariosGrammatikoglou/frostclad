@@ -1,8 +1,8 @@
+/* apps/frontend/src/app/globals.css */
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Win98 UI styles */
 @import "98.css/dist/98.css";
 
 :root {
@@ -25,27 +25,28 @@ body.app-window {
   color: var(--foreground);
   font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
   overflow: hidden;
-  /* No outer scrollbars */
+  /* prevents scrollbars on body */
 }
 
+/*Retro title bar styling*/
 .title-bar {
   display: flex;
   align-items: center;
   height: 28px;
   background: #000080;
-  /* Win98 classic blue */
+  /* Retro blue bar */
   color: white;
-  padding: 0 8px;
 }
 
-.title-bar .title-bar-text {
+.title-bar-text {
+  margin-left: 8px;
   font-size: 14px;
-  line-height: 28px;
 }
 
-.content-area {
+/* Content area */
+.window-body {
   flex: 1;
-  overflow-y: auto;
-  /* inner scrolling only */
-  padding: 12px;
+  overflow: auto;
+  /* enables scrolling of inner content only */
+  padding: 8px;
 }
