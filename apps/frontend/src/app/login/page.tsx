@@ -4,6 +4,7 @@ import { useState } from 'react';
 import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 
+
 export default function LoginPage() {
     const router = useRouter();
     const [form, setForm] = useState({ email: '', password: '' });
@@ -26,6 +27,7 @@ export default function LoginPage() {
 
     return (
         <div className="window " style={{ width: 350, margin: "18rem auto" }}>
+
             <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
                 <div className="title-bar-text">Login</div>
             </div>

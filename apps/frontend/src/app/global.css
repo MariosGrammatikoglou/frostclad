@@ -5,6 +5,8 @@
 
 @import "98.css/dist/98.css";
 
+
+
 :root {
   --background: #c0c0c0;
   --foreground: #222;
@@ -18,6 +20,15 @@ body {
   margin: 0;
   padding: 0;
 }
+
+html,
+body,
+body.app-window,
+.window,
+.window-body {
+  border-radius: 0 !important;
+}
+
 
 .myAlignClass {
   display: flex;

@@ -6,7 +6,7 @@ function createWindow() {
         height: 950,
         resizable: false,
         frame: false,        // ☑️ Removes the OS title bar and frame
-
+        roundedCorners: false,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
