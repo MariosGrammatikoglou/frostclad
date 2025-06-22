@@ -39,7 +39,6 @@
     },
     "files": [
       "electron.js",
-      "/assets/**",
       "apps/frontend/out/**",
       "apps/frontend/package.json",
       "apps/frontend/node_modules/**"
