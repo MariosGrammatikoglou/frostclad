@@ -16,7 +16,8 @@
     "prettier": "^3.5.3",
     "prisma": "^6.7.0",
     "turbo": "^2.5.3",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "electron-updater": "^5.3.0"
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",
@@ -30,6 +31,10 @@
     "apps/*",
     "packages/*"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MariosGrammatikoglou/frostclad"
+  },
   "build": {
     "appId": "com.frostclad.app",
     "productName": "Frostclad",
@@ -46,6 +51,11 @@
     "extraResources": [],
     "win": {
       "target": "nsis"
-    }
+    },
+    "publish": [
+      {
+        "provider": "github"
+      }
+    ]
   }
 }

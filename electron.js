@@ -1,4 +1,5 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { autoUpdater } = require('electron-updater');
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -6,7 +7,6 @@ function createWindow() {
         height: 800,
         resizable: false,
         frame: false,
-
         roundedCorners: false,
         webPreferences: {
             nodeIntegration: false,
@@ -14,16 +14,25 @@ function createWindow() {
         }
     });
 
-
-    // Load local app in development, Vercel in production
     const isDev = !app.isPackaged;
     if (isDev) {
         win.loadURL('http://localhost:3000');
     } else {
         win.loadURL('https://frostclad-frontend.vercel.app');
     }
-}
 
+    // Optional: Show update progress dialog
+    autoUpdater.on('update-downloaded', (info) => {
+        dialog.showMessageBox(win, {
+            type: 'info',
+            title: 'Update Ready',
+            message: 'A new version has been downloaded. Restart the app to apply the update?',
+            buttons: ['Restart', 'Later']
+        }).then(result => {
+            if (result.response === 0) autoUpdater.quitAndInstall();
+        });
+    });
+}
 
 ipcMain.on('window-minimize', () => BrowserWindow.getFocusedWindow()?.minimize());
 ipcMain.on('window-maximize', () => {
@@ -32,16 +41,18 @@ ipcMain.on('window-maximize', () => {
 });
 ipcMain.on('window-close', () => BrowserWindow.getFocusedWindow()?.close());
 
+app.whenReady().then(() => {
+    createWindow();
 
-// App ready
-app.whenReady().then(createWindow);
+    // Auto-update: only check for updates in production
+    if (app.isPackaged) {
+        autoUpdater.checkForUpdatesAndNotify();
+    }
+});
 
-// Quit on all windows closed, except on macOS (common Electron pattern)
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });
-
-// For macOS: re-create window on dock click if no window open
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
