@@ -39,15 +39,14 @@
     },
     "files": [
       "electron.js",
-      "public/assets/**",
+      "/assets/**",
       "apps/frontend/out/**",
       "apps/frontend/package.json",
       "apps/frontend/node_modules/**"
     ],
     "extraResources": [],
     "win": {
-      "target": "nsis",
-      "icon": "public/assets/icon.ico"
+      "target": "nsis"
     }
   }
 }
