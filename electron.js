@@ -6,7 +6,9 @@ function createWindow() {
         height: 950,
         resizable: false,
         frame: false,
-        //  icon: path.join(__dirname, 'assets', 'icon.ico'),
+        icon: path.join(__dirname, 'public', 'assets', 'icon.ico'),
+
+
         roundedCorners: false,
         webPreferences: {
             nodeIntegration: false,
