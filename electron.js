@@ -5,7 +5,8 @@ function createWindow() {
         width: 1400,
         height: 950,
         resizable: false,
-        frame: false,        // ☑️ Removes the OS title bar and frame
+        frame: false,
+        icon: path.join(__dirname, 'public', 'favicon.ico'),
         roundedCorners: false,
         webPreferences: {
             nodeIntegration: false,
