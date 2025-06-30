@@ -39,7 +39,7 @@ export default function ChannelPage() {
         }}>
             <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
                 <div className="title-bar-text">
-                    Frostclad v.1.0.2
+                    Frostclad v.1.0.3
                 </div>
             </div>
             <div className="window-body" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
