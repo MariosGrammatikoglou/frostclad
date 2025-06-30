@@ -1,79 +1,80 @@
 /* apps/frontend/src/app/globals.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-/* Make sure you import any necessary CSS */
 @import "98.css/dist/98.css";
-/* Only import 98.css if you need the retro styling */
 
-/* Root CSS Variables */
+
+
 :root {
   --background: #c0c0c0;
   --foreground: #222;
 }
 
-/* General reset for the app window */
 html,
 body {
   width: 100%;
   height: 100%;
+
   margin: 0;
   padding: 0;
-  font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+html,
+body,
+body.app-window,
+.window,
+.window-body {
+  border-radius: 0 !important;
+}
+
+
+.myAlignClass {
   display: flex;
   flex-direction: column;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
   min-height: 100vh;
   min-width: 100vw;
+  overflow: hidden;
+  margin-bottom: "300px";
+
 }
 
-/* Custom Topbar Styles */
-#custom-topbar {
+body.app-window {
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow: hidden;
+  /* ADD these lines: */
+}
+
+
+/*Retro title bar styling*/
+.title-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border: 1px solid blue;
-  /* Change to the border color you prefer */
-  background-color: lightblue;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Left Icon */
-#custom-topbar .icon {
-  margin-right: 10px;
-  font-size: 20px;
-}
-
-/* Title (Frostclad) */
-#custom-topbar .title {
-  font-weight: bold;
-  font-size: 16px;
-  flex-grow: 1;
-  /* Ensures the title stays centered */
-}
-
-/* Right-side Buttons */
-#custom-topbar .buttons button {
-  margin-left: 10px;
-  padding: 5px 10px;
-  font-size: 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#custom-topbar .minimize {
-  background-color: #4CAF50;
-  /* Green for minimize */
+  height: 28px;
+  background: #000080;
+  /* Retro blue bar */
   color: white;
 }
 
-#custom-topbar .close {
-  background-color: #f44336;
-  /* Red for close */
-  color: white;
+.title-bar-text {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+/* Content area */
+.window-body {
+  flex: 1;
+  overflow: auto;
+  /* enables scrolling of inner content only */
+  padding: 8px;
 }

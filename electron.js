@@ -9,8 +9,8 @@ function createWindow() {
         frame: false,
         roundedCorners: false,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
+            nodeIntegration: false,
+            contextIsolation: true,
         }
     });
 
@@ -21,7 +21,6 @@ function createWindow() {
         win.loadURL('https://frostclad-frontend.vercel.app');
     }
 
-    win.setMenuBarVisibility(false)
     // Optional: Show update progress dialog
     autoUpdater.on('update-downloaded', (info) => {
         dialog.showMessageBox(win, {
@@ -35,12 +34,12 @@ function createWindow() {
     });
 }
 
-ipcMain.on("manualMinimize", () => {
-    win.minimize()
-})
-ipcMain.on("manualClose", () => {
-    app.quit()
-})
+ipcMain.on('window-minimize', () => BrowserWindow.getFocusedWindow()?.minimize());
+ipcMain.on('window-maximize', () => {
+    const w = BrowserWindow.getFocusedWindow();
+    w?.isMaximized() ? w.unmaximize() : w.maximize();
+});
+ipcMain.on('window-close', () => BrowserWindow.getFocusedWindow()?.close());
 
 app.whenReady().then(() => {
     createWindow();
