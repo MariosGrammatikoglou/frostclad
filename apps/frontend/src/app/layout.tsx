@@ -14,18 +14,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
+
       <body
         className="app-window"
         style={{
-          width: "100vw",
-          height: "100vh",
+          width: '100vw',
+          height: '100vh',
           margin: 0,
           padding: 0,
-          overflow: "hidden",
-          background: "var(--background)",
+          overflow: 'hidden',
+          background: 'var(--background)',
         }}
       >
-        {/* ✅ Working Win98-style custom title bar */}
+        {/* ✅ Win98-style top bar */}
         <div
           className="title-bar"
           style={{
