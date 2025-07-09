@@ -1,7 +1,7 @@
 // apps/frontend/src/app/layout.tsx
 import type { Metadata } from 'next';
-import './global.css';
-import '98.css';
+import './global.css'; // keep this if you need your own base styles
+// import '98.css'; ❌ removed
 
 export const metadata: Metadata = {
   title: 'Frostclad',
@@ -16,32 +16,65 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body
-        className="app-window"
         style={{
           width: '100vw',
           height: '100vh',
           margin: 0,
           padding: 0,
           overflow: 'hidden',
-          background: 'var(--background)',
+          backgroundColor: '#1e1e1e',
+          color: '#ffffff',
+          fontFamily: 'sans-serif',
         }}
       >
-        {/* ✅ Win98-style top bar */}
+        {/* ✅ Simple custom top bar */}
         <div
-          className="title-bar"
           style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            backgroundColor: '#333',
+            color: '#fff',
+            padding: '6px 12px',
             WebkitAppRegion: 'drag',
             userSelect: 'none',
           }}
         >
-          <div className="title-bar-text">Frostclad</div>
-          <div
-            className="title-bar-controls"
-            style={{ WebkitAppRegion: 'no-drag' }}
-          >
-            <button aria-label="Minimize"></button>
-            <button aria-label="Maximize"></button>
-            <button aria-label="Close"></button>
+          <div>Frostclad</div>
+          <div style={{ display: 'flex', gap: '8px', WebkitAppRegion: 'no-drag' }}>
+            <button
+              style={{
+                background: 'transparent',
+                color: '#fff',
+                border: '1px solid #555',
+                padding: '2px 6px',
+                cursor: 'pointer',
+              }}
+            >
+              _
+            </button>
+            <button
+              style={{
+                background: 'transparent',
+                color: '#fff',
+                border: '1px solid #555',
+                padding: '2px 6px',
+                cursor: 'pointer',
+              }}
+            >
+              ☐
+            </button>
+            <button
+              style={{
+                background: 'transparent',
+                color: '#fff',
+                border: '1px solid #555',
+                padding: '2px 6px',
+                cursor: 'pointer',
+              }}
+            >
+              ✕
+            </button>
           </div>
         </div>
 
