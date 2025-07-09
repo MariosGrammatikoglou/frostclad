@@ -23,7 +23,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         overflow: "hidden",
         background: "var(--background)"
       }}>
-        {/* REMOVE outer title bar and window-body */}
+        <nav>
+          <p>Custom title</p>
+          <div>
+            <button>b1</button>
+            <button>b2</button>
+          </div>
+        </nav>
         {children}
       </body>
     </html>
