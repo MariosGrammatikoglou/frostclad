@@ -1,3 +1,12 @@
+import type { Metadata } from 'next';
+import './global.css';
+import '98.css';
+
+export const metadata: Metadata = {
+  title: 'Frostclad',
+  description: 'Retro Chat — Win98 Edition',
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -7,36 +16,34 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className="app-window"
         style={{
-          width: "100vw",
-          height: "100vh",
+          width: '100vw',
+          height: '100vh',
           margin: 0,
           padding: 0,
-          overflow: "hidden",
-          background: "var(--background)",
+          overflow: 'hidden',
+          background: 'var(--background)',
         }}
       >
-        {/* ✅ Custom top bar for Electron */}
+        {/* 🖱️ Win98-style title bar */}
         <div
           className="title-bar"
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            background: "gray",
-            padding: "4px 8px",
-            WebkitAppRegion: "drag", // Important for Electron!
-            userSelect: "none",
+            WebkitAppRegion: 'drag', // for Electron drag
+            userSelect: 'none',
           }}
         >
-          <p style={{ margin: 0 }}>Frostclad</p>
-          <div style={{ display: "flex", gap: "4px", WebkitAppRegion: "no-drag" }}>
-            <button>b1</button>
-            <button>b2</button>
+          <div className="title-bar-text">Frostclad</div>
+          <div className="title-bar-controls" style={{ WebkitAppRegion: 'no-drag' }}>
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
           </div>
         </div>
 
         {/* Main content */}
-        {children}
+        <div className="window-body" style={{ height: 'calc(100vh - 24px)', overflow: 'auto' }}>
+          {children}
+        </div>
       </body>
     </html>
   );
