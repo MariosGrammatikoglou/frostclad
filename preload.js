@@ -1,6 +1,6 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld('electron', {
-    minimize: () => ipcRenderer.send('window-minimize'),
-    close: () => ipcRenderer.send('window-close'),
+contextBridge.exposeInMainWorld("electron", {
+    minimize: () => ipcRenderer.send("manualMinimize"),
+    close: () => ipcRenderer.send("manualClose"),
 });
