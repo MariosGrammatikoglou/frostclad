@@ -4,7 +4,6 @@ import { useState } from 'react';
 import api from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 
-
 export default function LoginPage() {
     const router = useRouter();
     const [form, setForm] = useState({ email: '', password: '' });
@@ -26,14 +25,13 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="window " style={{ width: 350, margin: "18rem auto" }}>
-
-            <div className="title-bar" style={{ paddingLeft: '8px', paddingTop: '4px', paddingBottom: '4px' }}>
-                <div className="title-bar-text">Login</div>
+        <div>
+            <div>
+                <div>Login</div>
             </div>
-            <div className="window-body">
+            <div>
                 <form onSubmit={handleSubmit}>
-                    <div className="field-row-stacked">
+                    <div>
                         <label htmlFor="email">Email</label>
                         <input
                             id="email"
@@ -44,7 +42,7 @@ export default function LoginPage() {
                             required
                         />
                     </div>
-                    <div className="field-row-stacked" style={{ marginTop: 8 }}>
+                    <div>
                         <label htmlFor="password">Password</label>
                         <input
                             id="password"
@@ -55,16 +53,19 @@ export default function LoginPage() {
                             required
                         />
                     </div>
-                    {error && <div className="status-bar status-bar--error" style={{ margin: "8px 0" }}>
-                        <p>{error}</p>
-                    </div>}
-                    <div className="field-row" style={{ marginTop: 14 }}>
-                        <button type="submit" className="button">Login</button>
+                    {error && (
+                        <div>
+                            <p>{error}</p>
+                        </div>
+                    )}
+                    <div>
+                        <button type="submit">Login</button>
                         <button
                             type="button"
-                            className="button"
                             onClick={() => router.push('/register')}
-                        >Register</button>
+                        >
+                            Register
+                        </button>
                     </div>
                 </form>
             </div>
