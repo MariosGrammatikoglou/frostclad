@@ -50,6 +50,14 @@ app.whenReady().then(() => {
     }
 });
 
+ipcMain.on("manualMinimize", () => {
+    win.minimize();
+})
+
+ipcMain.on("manualClose", () => {
+    app.quit();
+})
+
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });

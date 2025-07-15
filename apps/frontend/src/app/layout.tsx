@@ -41,8 +41,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             <p style={{ margin: 0 }}>Frostclad</p>
             <div style={{ display: "flex", gap: "4px", WebkitAppRegion: "no-drag" }}>
-              <button>b1</button>
-              <button>b2</button>
+              <button id="minimize">min</button>
+              <button id="close">close</button>
             </div>
           </div>
 
