@@ -41,13 +41,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             <p style={{ margin: 0 }}>Frostclad</p>
             <div style={{ display: "flex", gap: "4px", WebkitAppRegion: "no-drag" }}>
-              <button onClick={() => window.electron?.minimize?.()}>min</button>
-              <button onClick={() => window.electron?.close?.()}>close</button>
+              <button id="minimize">min</button>
+              <button id="close">close</button>
             </div>
           </div>
 
           {/* ✅ Content below title bar */}
-          <div style={{ flex: 1, overflow: "auto" }}>{children}</div>
+          <div style={{ flex: 1, overflow: "auto" }}>
+            {children}
+          </div>
         </div>
       </body>
     </html>
