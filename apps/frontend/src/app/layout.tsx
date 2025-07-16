@@ -1,35 +1,15 @@
-'use client'; // ✅ Required for client-side interactivity
+'use client';
 
 import type { ReactNode } from 'react';
-import { useEffect } from 'react';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  useEffect(() => {
-    const minimizeBtn = document.getElementById("minimize");
-    const closeBtn = document.getElementById("close");
+  const handleMinimize = () => {
+    window.electronAPI?.minimize?.();
+  };
 
-    if (minimizeBtn) {
-      minimizeBtn.addEventListener("click", () => {
-        if (window.electronAPI?.minimize) {
-          window.electronAPI.minimize();
-        }
-      });
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => {
-        if (window.electronAPI?.close) {
-          window.electronAPI.close();
-        }
-      });
-    }
-
-    // Optional cleanup
-    return () => {
-      minimizeBtn?.removeEventListener("click", () => { });
-      closeBtn?.removeEventListener("click", () => { });
-    };
-  }, []);
+  const handleClose = () => {
+    window.electronAPI?.close?.();
+  };
 
   return (
     <html lang="en">
@@ -59,7 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             overflow: "hidden",
           }}
         >
-          {/* Custom title bar */}
+          {/* ✅ Custom title bar */}
           <div
             style={{
               display: "flex",
@@ -73,11 +53,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           >
             <p style={{ margin: 0 }}>Frostclad</p>
             <div style={{ display: "flex", gap: "4px", WebkitAppRegion: "no-drag" }}>
-              <button id="minimize">min</button>
-              <button id="close">close</button>
+              <button onClick={handleMinimize}>min</button>
+              <button onClick={handleClose}>close</button>
             </div>
           </div>
 
+          {/* ✅ Content below title bar */}
           <div style={{ flex: 1, overflow: "auto" }}>{children}</div>
         </div>
       </body>
