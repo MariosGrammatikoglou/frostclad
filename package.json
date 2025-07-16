@@ -43,6 +43,7 @@
     },
     "files": [
       "electron.js",
+      "preload.js",
       "apps/frontend/out/**",
       "apps/frontend/package.json",
       "apps/frontend/node_modules/**"
