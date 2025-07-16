@@ -1,37 +1,177 @@
-/* apps/frontend/src/app/globals.css */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
-
 :root {
-  --background: #c0c0c0;
-  --foreground: #222;
+  --background: #121212;
+  --foreground: #f1f1f1;
+  --primary-color: #1e90ff;
+  /* Frostclad blue theme */
+  --secondary-color: #232323;
+  --border-radius: 10px;
+  --card-shadow: rgba(0, 0, 0, 0.2);
+  --input-border: #333;
+  --focus-color: #1e90ff;
+  --error-color: #ff6b6b;
+  --button-hover: #1c86ee;
+  --font-family: 'Roboto', sans-serif;
 }
 
+/* Global styles */
 html,
 body {
-  width: 100%;
   height: 100%;
-
   margin: 0;
   padding: 0;
+  font-family: var(--font-family);
+  background: #101010;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--foreground);
 }
 
-html,
-body,
-body.app-window,
-.window,
-.window-body {
-  border-radius: 0 !important;
+/* Container that holds the entire login UI */
+.login-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, rgba(30, 30, 30, 1) 0%, rgba(10, 10, 10, 1) 100%);
 }
 
+/* Card style - smaller and more compact */
+.card {
+  width: 100%;
+  max-width: 350px;
+  /* Reduced width for a smaller card */
+  background-color: #1f1f1f;
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 20px var(--card-shadow);
+  padding: 1.25rem;
+  /* Slightly reduced padding for compactness */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* Reduced gap between elements */
+  backdrop-filter: blur(10px);
+  margin: 0 auto;
+}
 
+/* Title styling */
+.title {
+  font-size: 1.8rem;
+  /* Slightly smaller title */
+  font-weight: 600;
+  color: var(--primary-color);
+  /* Frostclad blue color */
+  text-align: center;
+  margin-bottom: 0.15rem;
+  /* Reduced margin */
+}
 
-/* Content area */
-.window-body {
-  flex: 1;
-  overflow: auto;
-  /* enables scrolling of inner content only */
-  padding: 8px;
+/* Updated Subtitle */
+.subtitle {
+  font-size: 1rem;
+  color: #bbb;
+  text-align: center;
+  margin-bottom: 0.75rem;
+  /* Adjusted margin for spacing */
+}
+
+/* Login Label */
+.login-label {
+  font-size: 1.25rem;
+  color: #bbb;
+  text-align: center;
+  margin-bottom: 0.25rem;
+  /* Reduced space between label and input */
+}
+
+/* Form styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  /* Reduced gap between form elements */
+}
+
+/* Form group styles */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label styling */
+.label {
+  font-size: 0.9rem;
+  color: var(--foreground);
+  margin-bottom: 0.4rem;
+}
+
+/* Input styles */
+.input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+  background: #2e2e2e;
+  color: var(--foreground);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--focus-color);
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.4);
+  /* Frostclad focus effect */
+}
+
+/* Button styles */
+.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  background-color: #333333;
+  /* Dark background for the button */
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  /* Slight lift on hover */
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  /* Slight push down effect on click */
+}
+
+/* Register prompt */
+.register-prompt {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #bbb;
+}
+
+/* Register button styled like a link */
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 0.3rem;
+  padding: 0;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: var(--button-hover);
+  text-decoration: none;
 }

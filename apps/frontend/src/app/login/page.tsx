@@ -25,14 +25,13 @@ export default function LoginPage() {
     };
 
     return (
-        <div>
-            <div>
-                <div>Login</div>
-            </div>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="email">Email</label>
+        <div className="login-container">
+            <div className="card">
+                <h2 className="title">Frostclad Gate</h2>
+                <p className="login-label">Login</p>  {/* Login label added here */}
+                <form onSubmit={handleSubmit} className="form">
+                    <div className="form-group">
+                        <label htmlFor="email" className="label">Email Address</label>
                         <input
                             id="email"
                             type="email"
@@ -40,10 +39,11 @@ export default function LoginPage() {
                             autoComplete="email"
                             onChange={handleChange}
                             required
+                            className="input"
                         />
                     </div>
-                    <div>
-                        <label htmlFor="password">Password</label>
+                    <div className="form-group">
+                        <label htmlFor="password" className="label">Password</label>
                         <input
                             id="password"
                             type="password"
@@ -51,18 +51,23 @@ export default function LoginPage() {
                             autoComplete="current-password"
                             onChange={handleChange}
                             required
+                            className="input"
                         />
                     </div>
                     {error && (
-                        <div>
-                            <p>{error}</p>
+                        <div className="error-message">
+                            {error}
                         </div>
                     )}
-                    <div>
-                        <button type="submit">Login</button>
+                    <div className="button-group">
+                        <button type="submit" className="btn-primary">Login</button>
+                    </div>
+                    <div className="register-prompt">
+                        <span>Don’t have an account?</span>
                         <button
                             type="button"
                             onClick={() => router.push('/register')}
+                            className="btn-link"
                         >
                             Register
                         </button>
