@@ -25,14 +25,17 @@ export default function LoginPage() {
     };
 
     return (
-        <div>
-            <div>
-                <div>Login</div>
-            </div>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="email">Email</label>
+        <div className="page-container"> {/* Parent div for centering */}
+            <div className="login-container">
+                {/* Frostclad Gate and Login Title inside the same div */}
+                <div className="title-container">
+                    <h1 className="frostclad-title">Frostclad Gate</h1>
+                    <h2 className="login-title">Login</h2>
+                </div>
+
+                <form onSubmit={handleSubmit} className="login-form">
+                    <div className="form-group">
+                        <label htmlFor="email" className="form-label">Email</label>
                         <input
                             id="email"
                             type="email"
@@ -40,10 +43,11 @@ export default function LoginPage() {
                             autoComplete="email"
                             onChange={handleChange}
                             required
+                            className="form-input"
                         />
                     </div>
-                    <div>
-                        <label htmlFor="password">Password</label>
+                    <div className="form-group">
+                        <label htmlFor="password" className="form-label">Password</label>
                         <input
                             id="password"
                             type="password"
@@ -51,23 +55,21 @@ export default function LoginPage() {
                             autoComplete="current-password"
                             onChange={handleChange}
                             required
+                            className="form-input"
                         />
                     </div>
-                    {error && (
-                        <div>
-                            <p>{error}</p>
-                        </div>
-                    )}
-                    <div>
-                        <button type="submit">Login</button>
-                        <button
-                            type="button"
-                            onClick={() => router.push('/register')}
-                        >
-                            Register
-                        </button>
+                    {error && <p className="error-message">{error}</p>}
+                    <div className="form-actions">
+                        <button type="submit" className="btn">Login</button>
                     </div>
                 </form>
+
+                {/* Small text with a link to register */}
+                <div className="register-link">
+                    <p className="register-text">
+                        Don't have an account? <a href="/register" className="register-link-text">Register here</a>
+                    </p>
+                </div>
             </div>
         </div>
     );
