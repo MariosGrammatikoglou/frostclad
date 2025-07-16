@@ -1,4 +1,36 @@
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+'use client'; // ✅ Required for client-side interactivity
+
+import type { ReactNode } from 'react';
+import { useEffect } from 'react';
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    const minimizeBtn = document.getElementById("minimize");
+    const closeBtn = document.getElementById("close");
+
+    if (minimizeBtn) {
+      minimizeBtn.addEventListener("click", () => {
+        if (window.electronAPI?.minimize) {
+          window.electronAPI.minimize();
+        }
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        if (window.electronAPI?.close) {
+          window.electronAPI.close();
+        }
+      });
+    }
+
+    // Optional cleanup
+    return () => {
+      minimizeBtn?.removeEventListener("click", () => { });
+      closeBtn?.removeEventListener("click", () => { });
+    };
+  }, []);
+
   return (
     <html lang="en">
       <head>
@@ -27,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             overflow: "hidden",
           }}
         >
-          {/* ✅ Custom title bar */}
+          {/* Custom title bar */}
           <div
             style={{
               display: "flex",
@@ -46,10 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
 
-          {/* ✅ Content below title bar */}
-          <div style={{ flex: 1, overflow: "auto" }}>
-            {children}
-          </div>
+          <div style={{ flex: 1, overflow: "auto" }}>{children}</div>
         </div>
       </body>
     </html>

@@ -12,7 +12,8 @@ function createWindow() {
         frame: false,
         roundedCorners: false,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"), // ✅ Reference your preload
+            preload: path.join(__dirname, "preload.js"),
+
             contextIsolation: true,
             nodeIntegration: false,
         },
