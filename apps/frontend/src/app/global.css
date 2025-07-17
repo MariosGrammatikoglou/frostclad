@@ -193,3 +193,36 @@
     justify-content: center;
   }
 }
+
+/* Custom Topbar (Desktop) */
+.custom-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: gray;
+  padding: 4px 8px;
+  WebkitAppRegion: drag;
+  user-select: none;
+}
+
+.custom-topbar p {
+  margin: 0;
+}
+
+.custom-topbar .button-group {
+  display: flex;
+  gap: 4px;
+  WebkitAppRegion: no-drag;
+}
+
+.custom-topbar button {
+  padding: 8px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.custom-topbar button:hover {
+  background-color: #555;
+}
