@@ -1,228 +1,37 @@
-/* Define color variables */
+/* apps/frontend/src/app/globals.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
 :root {
-  --dark-gray: #2c2c2c;
-  --card-gray: #444;
-  --foreground: #fff;
-  --primary: #007bff;
-  --secondary: #6c757d;
-  --light-gray: #ccc;
-  --error: #dc3545;
-  --light-blue: #66b3ff;
+  --background: #c0c0c0;
+  --foreground: #222;
 }
 
-/* Page container to center everything */
-.page-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+html,
+body {
+  width: 100%;
   height: 100%;
-  width: 100%;
-  background-color: var(--dark-gray);
-  overflow: hidden;
-}
 
-/* Login card container */
-.login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 400px;
-  background-color: var(--card-gray);
-  color: var(--foreground);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Title container for Frostclad Gate and Login */
-.title-container {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.frostclad-title {
-  font-size: 32px;
-  font-weight: bold;
-  color: var(--light-blue);
-  margin-bottom: 5px;
-}
-
-.login-title {
-  font-size: 28px;
-  font-weight: bold;
-  color: var(--foreground);
-  margin-bottom: 20px;
-  padding-top: 20px;
-}
-
-/* Form styling */
-.login-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-label {
-  font-size: 14px;
-  margin-bottom: 5px;
-  color: var(--foreground);
-}
-
-.form-input {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid var(--light-gray);
-  border-radius: 4px;
-  transition: border-color 0.3s;
-  background-color: var(--dark-gray);
-  color: var(--foreground);
-}
-
-.form-input:focus {
-  border-color: var(--primary);
-  outline: none;
-}
-
-/* Error message styling */
-.error-message {
-  font-size: 12px;
-  color: var(--error);
-  text-align: center;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.btn {
-  padding: 10px 15px;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 100%;
-  max-width: 150px;
-}
-
-.btn:hover {
-  opacity: 0.9;
-}
-
-.btn-secondary {
-  background-color: var(--secondary);
-  color: #fff;
-}
-
-.btn {
-  background-color: var(--primary);
-  color: #fff;
-}
-
-.register-link {
-  margin-top: 20px;
-}
-
-.register-text {
-  font-size: 14px;
-  color: var(--foreground);
-  text-align: center;
-}
-
-.register-link-text {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.register-link-text:hover {
-  text-decoration: underline;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 600px) {
-
-  /* Remove topbar on mobile */
-  .custom-topbar {
-    display: none;
-  }
-
-  .login-container {
-    padding: 20px;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .frostclad-title {
-    font-size: 26px;
-  }
-
-  .login-title {
-    font-size: 24px;
-  }
-
-  .form-input {
-    font-size: 16px;
-    padding: 12px;
-  }
-
-  .btn {
-    max-width: 100%;
-    padding: 12px 15px;
-  }
-
-  .register-text {
-    font-size: 16px;
-  }
-
-  /* Make login container take full height */
-  .login-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-
-/* Custom Topbar (Desktop) */
-.custom-topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: gray;
-  padding: 4px 8px;
-  WebkitAppRegion: drag;
-  user-select: none;
-}
-
-.custom-topbar p {
   margin: 0;
+  padding: 0;
 }
 
-.custom-topbar .button-group {
-  display: flex;
-  gap: 4px;
-  WebkitAppRegion: no-drag;
+html,
+body,
+body.app-window,
+.window,
+.window-body {
+  border-radius: 0 !important;
 }
 
-.custom-topbar button {
+
+
+/* Content area */
+.window-body {
+  flex: 1;
+  overflow: auto;
+  /* enables scrolling of inner content only */
   padding: 8px;
-  background: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.custom-topbar button:hover {
-  background-color: #555;
 }
