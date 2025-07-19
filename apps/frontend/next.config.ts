@@ -4,7 +4,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // (add your other config here)
+  experimental: {
+    optimizeCss: false, // ✅ Disable Lightning CSS to avoid native module issues
+  },
 };
 
 export default nextConfig;
